@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch, Redirect, BrowserRouter } from 'react-router-dom';
 import './App.css';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Login from '../src/containers/Login/Login';
+import Register from '../src/containers/Register/Register';
+import Full from './containers/DefaultLayout/DefaultLayout.js';
+import { connect } from 'react-redux';
+import loginAction, { checkAuthAction } from '../src/actions/auth'; 
+import PrivateRoute from '../src/components/Routes/private-route';
+import NoAuthRoute from '../src/components/Routes/no-auth-route';
+
 // Styles
 // CoreUI Icons Set
 import '@coreui/icons/css/coreui-icons.min.css';
@@ -15,18 +24,25 @@ import './scss/style.css'
 // import '../node_modules/@coreui/styles/scss/_dropdown-menu-right.scss';
 
 // Containers
-import Full from './containers/DefaultLayout/DefaultLayout.js';
+
 
 // import { renderRoutes } from 'react-router-config';
 
 class App extends Component {
   render() {
     return (
-      <HashRouter>
-        <Switch>
-          <Route path="/" name="Home" component={Full} />
-        </Switch>
-      </HashRouter>
+      <BrowserRouter>
+      <div className="App">
+        <MuiThemeProvider>
+          <Switch>
+            <NoAuthRoute exact path='/' component={Login}/>
+            <NoAuthRoute  path='/register' component={Register}/>
+            <PrivateRoute path="/"  component={Full} />
+          </Switch>
+        </MuiThemeProvider>
+        {this.props.children}
+      </div>
+    </BrowserRouter>
     );
   }
 }

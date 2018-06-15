@@ -1,0 +1,28 @@
+
+
+
+.general {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 300px;
+    
+        .input-container {
+            display: flex;
+            flex-direction: column;
+        }
+        .register-button {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .link_login{
+            text-decoration: none;
+            color: white;
+        }
+    }
+}

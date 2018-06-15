@@ -6,8 +6,16 @@ export default {
       icon: 'cui-speedometer icons',
       badge: {
         variant: 'info',
-        text: 'NEW'
       }
-    }
+    },
+    {
+      name: 'Zoomable Layout',
+      url: '/zoomablelayout',
+      icon: 'cui-speedometer icons',
+      badge: {
+        variant: 'info',
+      }
+    },
+   
   ]
 };

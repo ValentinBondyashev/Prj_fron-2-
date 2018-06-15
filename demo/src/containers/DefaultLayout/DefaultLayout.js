@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Container, Nav, NavItem, NavLink, Badge, DropdownToggle, DropdownMenu } from 'reactstrap';
+import ZoomableLayout from '../../components/ZoomableLayout/ZoomableLayout';
+import Dashboard from '../../containers/Dashboard/Dashboard';
+import { connect } from 'react-redux';
+import { getSkillsAction, editSkillsAction, createSkillsAction, getIdCategoriesAction } from '../../actions/skill'; 
+import { getCheckAdminAction } from '../../actions/auth'; 
 
 import {
   AppAside,
@@ -20,37 +25,45 @@ import {
 } from '../../../../src';
 // sidebar nav config
 import navigation from '../../_nav.js';
+import navigationAdmin from '../../_navAdmin.js';
 // routes config
 import routes from '../../routes.js';
 
-import logo from '../../assets/img/brand/logo.svg'
+import logo from '../../assets/img/brand/logo.png'
 import sygnet from '../../assets/img/brand/sygnet.svg'
 import avatar from '../../assets/img/avatars/6.jpg'
 
 class DefaultLayout extends Component {
+  constructor() {
+    super();
+    this.state = {
+        skill: {skillTitle:'', mark: '', disposition: '', comment: ''},
+        displayDialog: false,
+        idSkill : 1,
+    };
+  }
+
+  componentWillMount() {
+    this.props.getSkillsFunction(); 
+    this.props.getdCategoriesFunction();
+    this.props.getCheckAdminFunction();
+  }
   render() {
+    const {photo, checkAdmin} = this.props;
+
     return (
       <div className="app">
         <AppHeader fixed>
           <AppSidebarToggler className="d-lg-none" display="md" mobile />
           <AppNavbarBrand
-            full={{ src: logo, width: 89, height: 25, alt: 'CoreUI Logo' }}
+            full={{ src: logo, width: 35, height: 30, alt: 'Roadmaps' }}
             minimized={{ src: sygnet, width: 30, height: 30, alt: 'CoreUI Logo' }}
           />
           <AppSidebarToggler className="d-md-down-none" display="lg" />
           <Nav className="ml-auto" navbar>
-            <NavItem className="d-md-down-none">
-              <NavLink href="#"><i className="cui-bell icons font-xl d-block"></i><Badge pill color="danger">5</Badge></NavLink>
-            </NavItem>
-            <NavItem className="d-md-down-none">
-              <NavLink href="#"><i className="cui-list icons icons font-xl d-block"></i></NavLink>
-            </NavItem>
-            <NavItem className="d-md-down-none">
-              <NavLink href="#"><i className="cui-location-pin icons icons font-xl d-block"></i></NavLink>
-            </NavItem>
             <AppHeaderDropdown>
               <DropdownToggle nav>
-                <img src={avatar} className="img-avatar" alt="admin@bootstrapmaster.com" />
+                <img src={photo ? photo : 'https://lh3.googleusercontent.com/-gXrDT7eEAoI/AAAAAAAAAAI/AAAAAAAAAAA/ylTkWjUFffI/photo.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
               </DropdownToggle>
               <DropdownMenu right style={{ right: 'auto', height: '400px' }}>
                 AppHeaderDropdown
@@ -64,11 +77,11 @@ class DefaultLayout extends Component {
           <AppSidebar fixed display="lg">
             <AppSidebarHeader />
             <AppSidebarForm />
-            <AppSidebarNav navConfig={navigation} {...this.props} />
+            <AppSidebarNav navConfig={checkAdmin ? navigationAdmin :  navigation } {...this.props} />
             <AppSidebarFooter />
             <AppSidebarMinimizer />
           </AppSidebar>
-          <main className="main">
+          <main className="main" style={{display: '0'}}>
             <AppBreadcrumb appRoutes={routes}>
             </AppBreadcrumb>
             <Container fluid>
@@ -81,6 +94,8 @@ class DefaultLayout extends Component {
                   },
                 )}
                 <Redirect from="/" to="/dashboard" />
+                <Redirect from="/" to="/zoomablelayout" />
+                { checkAdmin ? <Redirect from="/" to="/compare" /> : null}
               </Switch>
             </Container>
           </main>
@@ -89,12 +104,39 @@ class DefaultLayout extends Component {
           </AppAside>
         </div>
         <AppFooter>
-          <span><a href="https://coreui.io">CoreUI</a> &copy; 2018 creativeLabs</span>
-          <span className="ml-auto">Powered by <a href="https://coreui.io/react">CoreUI for React</a></span>
         </AppFooter>
       </div>
     );
   }
 }
 
-export default DefaultLayout;
+function mapStateToProps(state) {
+  return { 
+      skills: state.skill.skills.data,
+      id: state.skill.id.data,     
+      checkAdmin: state.auth.checkAdmin,
+      photo: state.auth.photo
+  };
+}
+function mapDispathToProps(dispatch) {
+  return {
+      getSkillsFunction: function () {
+          dispatch(getSkillsAction());
+      },
+      getdCategoriesFunction: function () {
+          dispatch(getIdCategoriesAction());
+      },
+      editSkillFunction: function (skill) {
+          dispatch(editSkillsAction(skill));
+      }, 
+      createSkillsAction: function (skill){
+          dispatch(createSkillsAction(skill));
+      },
+      getCheckAdminFunction : function (){
+        dispatch(getCheckAdminAction());
+      }
+  };
+}
+
+export default connect(mapStateToProps,mapDispathToProps)(DefaultLayout);
+

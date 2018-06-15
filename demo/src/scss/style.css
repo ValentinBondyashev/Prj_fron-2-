@@ -483,8 +483,8 @@ pre {
 
 .container-fluid {
   width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
+  padding-right: 0px;
+  padding-left: 0px;
   margin-right: auto;
   margin-left: auto; }
 
@@ -2840,6 +2840,7 @@ input[type="button"].btn-block {
   align-items: center; }
 
 .navbar-toggler {
+  outline: none;
   padding: 0.25rem 0.75rem;
   font-size: 1.09375rem;
   line-height: 1;
@@ -7743,7 +7744,7 @@ canvas {
     padding-left: 7.5px; }
 
 .main .container-fluid {
-  padding: 0 30px; }
+  padding: 0 0px; }
 
 .app-header {
   position: relative;

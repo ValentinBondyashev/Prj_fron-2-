@@ -4,7 +4,7 @@ import './App.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Login from '../src/containers/Login/Login';
 import Register from '../src/containers/Register/Register';
-import Full from './containers/DefaultLayout/DefaultLayout.js';
+import Full from './containers/MenuApp/MenuApp.js';
 import { connect } from 'react-redux';
 import loginAction, { checkAuthAction } from '../src/actions/auth'; 
 import PrivateRoute from '../src/components/Routes/private-route';

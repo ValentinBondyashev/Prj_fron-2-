@@ -1,5 +1,5 @@
 
-import Full from './containers/DefaultLayout/DefaultLayout.js';
+import Full from './containers/MenuApp/MenuApp.js';
 import ZoomableLayout from './components/ZoomableLayout/ZoomableLayout';
 import Compare from './containers/Compare/Compare';
 import Dashboard from './containers/Dashboard/Dashboard';

@@ -18,6 +18,7 @@ import 'primereact/resources/themes/omega/theme.css';
 import 'font-awesome/css/font-awesome.css';
 import Chart from '../../components/charts/test';
 import ZoomableLayout from '../../components/ZoomableLayout/ZoomableLayout';
+import Bubble from '../Bubble/Bubble'
 
 
 class Dashboard extends Component {
@@ -111,8 +112,7 @@ class Dashboard extends Component {
             this.props.createSkillsAdminFunction(data, this.props.userId);
         }else{
             this.props.createSkillsAction(data);
-        }
-        
+        }     
         this.setState({displayDialog: false});
     }
     updateProperty = (property, value) => {
@@ -146,24 +146,40 @@ class Dashboard extends Component {
 
         const { userSkill, skills, id} = this.props
 
-        let footer = <div className="ui-helper-clearfix" style={{width:'100%'}}>
-            <Button style={{float:'left'}} icon="fa-plus" label="Add" onClick={this.addNew}/>
-        </div>;
+        let header = <div style={{'textAlign':'left'}}>
+                        <i className="fa fa-search" style={{margin:'4px 4px 0 0'}}></i>
+                        <InputText type="search" onInput={(e) => this.setState({globalFilter: e.target.value})} placeholder="Global Search" size="50"/>
+                    </div>;
 
-        let dialogFooter = <div className="ui-dialog-buttonpane ui-helper-clearfix">
-            <Button label="Save" icon="fa-check" onClick={this.save}/>
-        </div>;
+        let footer = <div className="ui-helper-clearfix" style={{width:'100%'}}>
+                        <Button style={{float:'left'}} icon="fa-plus" label="Add" onClick={this.addNew}/>
+                    </div>;
+
+        let dialogFooter =  <div className="ui-dialog-buttonpane ui-helper-clearfix">
+                                <Button label="Save" icon="fa-check" onClick={this.save}/>
+                            </div>;
         return (
             <div>
-                <div className="content-section implementation" style={{padding: '0'}}>
-                <DataTable header="Технологии"    value={userSkill ? userSkill : skills} rowGroupMode="subheader"  footer={footer}  groupField="skillCategoryTitle" rowGroupFooterTemplate={this.footerTemplate}  rowGroupHeaderTemplate={this.headerTemplate} >           
+                <div >
+                <Bubble/>
+                </div>
+                <div className="content-section implementation" style={{padding: '0', minHeight: '100px'}}>
+                <DataTable header="Технологии"  value={userSkill ? userSkill : skills} 
+                                                rowGroupMode="subheader"  footer={footer} 
+                                                groupField="skillCategoryTitle" 
+                                                rowGroupFooterTemplate={this.footerTemplate}  
+                                                rowGroupHeaderTemplate={this.headerTemplate} 
+                                                globalFilter={this.state.globalFilter}
+                                                paginator={true} rows={10} header={header}>           
                     <Column field="skillTitle"  header="Технология"/>
                     <Column field="mark" header="Скилл от 1 до 10 :" editor={this.editor}/>
                     <Column field="disposition" header="Желание от 1 до 10 :" editor={this.editor}/>
                     <Column field="comment" header="Комментарий" editor={this.editor}/>
                 </DataTable>
                 
-                <Dialog visible={this.state.displayDialog} header="Add Skill" modal={true} footer={dialogFooter} onHide={() => this.setState({displayDialog: false})}>
+                <Dialog visible={this.state.displayDialog} 
+                        header="Add Skill" modal={true} 
+                        footer={dialogFooter} onHide={() => this.setState({displayDialog: false})}>
                      <div className="ui-grid ui-grid-responsive ui-fluid">
                         <div className="ui-grid-row">
                             <div className="ui-grid-col-4" style={{padding:'4px 10px'}}><label htmlFor="skillTitle">Технология</label></div>

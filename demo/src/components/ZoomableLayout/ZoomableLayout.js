@@ -70,6 +70,7 @@ class ZoomableLayout extends Component {
       .attr("text-anchor", "middle")
       .style("opacity", function(d) { return d.r > 200 ? 1 : 0; })
       .text(function(d) { return d.name });
+      //String(d.name) === 'undefined' ? null : String(d.name).substring(0,10)
     
     vis.selectAll("text.parent")
       .style("opacity", function(d) { return d.r > 10 ? 1 : 0; });
@@ -142,6 +143,7 @@ class ZoomableLayout extends Component {
   }
 
   createNewArr = (skills) => {
+   
     let other = {}, letter; 
     let obj = { "children": []}
       skills.forEach(element => {
@@ -167,6 +169,7 @@ class ZoomableLayout extends Component {
   }
 
   render() {
+    console.log(this.props.skills)
   return (
     <div style={{display:"flex", justifyContent: "center", background: "#f2f5f9"}}>
       <svg onClick={this.createBar.bind(this)} ref={input => this.input = input}></svg> 

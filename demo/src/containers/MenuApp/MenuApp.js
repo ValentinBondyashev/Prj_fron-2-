@@ -22,7 +22,7 @@ import {
   AppSidebarMinimizer,
   AppSidebarNav,
   AppSidebarToggler,
-} from '../../../../src';
+} from '../../modules';
 // sidebar nav config
 import navigation from '../../_nav.js';
 import navigationAdmin from '../../_navAdmin.js';
@@ -33,7 +33,7 @@ import logo from '../../assets/img/brand/logo.png'
 import sygnet from '../../assets/img/brand/sygnet.svg'
 import avatar from '../../assets/img/avatars/6.jpg'
 
-class DefaultLayout extends Component {
+class MenuApp extends Component {
   constructor() {
     super();
     this.state = {
@@ -138,5 +138,5 @@ function mapDispathToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps,mapDispathToProps)(DefaultLayout);
+export default connect(mapStateToProps,mapDispathToProps)(MenuApp);
 

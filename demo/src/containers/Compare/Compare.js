@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getAllSkillsAction, getSkillUserAction } from '../../actions/compare'; 
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-import ZoomableLayout from '../../components/ZoomableLayout/ZoomableLayout';
+import Bubble from '../Bubble/Bubble';
 import Dashboard from '../../containers/Dashboard/Dashboard';
 import UserTable from '../../containers/UsersTable/UserTable';
 
@@ -31,7 +31,7 @@ class Compare extends Component {
         <div className="general" >
                 <UserTable allSkills={allSkills}/>   
                 {userSkill ? <Dashboard userSkill={userSkill} />: null }
-                {userSkill ? <ZoomableLayout userSkill={userSkill}/> : null}  
+                {userSkill ? <Bubble userSkill={userSkill}/> : null}  
         </div>
     );
   }

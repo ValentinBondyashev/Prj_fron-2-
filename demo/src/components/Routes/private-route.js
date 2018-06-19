@@ -3,11 +3,10 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
-<Route
+    <Route
       {...rest}
       render={props =>
         rest.token != '' ? (
-          
           <Component {...props} />
         ) : (
          /* <Redirect

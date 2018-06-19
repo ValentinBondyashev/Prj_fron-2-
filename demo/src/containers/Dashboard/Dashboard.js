@@ -142,6 +142,7 @@ class Dashboard extends Component {
         this.setState({idSkill:value})
     }
     
+    
     render() {
 
         const { userSkill, skills, id} = this.props
@@ -160,9 +161,6 @@ class Dashboard extends Component {
                             </div>;
         return (
             <div>
-                <div >
-                <Bubble/>
-                </div>
                 <div className="content-section implementation" style={{padding: '0', minHeight: '100px'}}>
                 <DataTable header="Технологии"  value={userSkill ? userSkill : skills} 
                                                 rowGroupMode="subheader"  footer={footer} 

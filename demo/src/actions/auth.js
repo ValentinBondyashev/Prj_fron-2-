@@ -50,7 +50,6 @@ export const loginGoogleAction = () => dispatch => {
     var token = result.credential.accessToken;
     var user = result.user;
     localStorage.setItem('token', firebase.auth().currentUser.qa);
-    console.log(result);
    let payload =  {
     token: firebase.auth().currentUser.qa,
     photo: result.user.photoURL

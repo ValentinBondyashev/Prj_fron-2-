@@ -50,7 +50,6 @@ class MenuApp extends Component {
   }
   render() {
     const {photo, checkAdmin} = this.props;
-
     return (
       <div className="app">
         <AppHeader fixed>
@@ -94,7 +93,7 @@ class MenuApp extends Component {
                   },
                 )}
                 <Redirect from="/" to="/dashboard" />
-                <Redirect from="/" to="/zoomablelayout" />
+                <Redirect from="/" to="/bubble" />
                 { checkAdmin ? <Redirect from="/" to="/compare" /> : null}
               </Switch>
             </Container>
@@ -113,6 +112,7 @@ class MenuApp extends Component {
 function mapStateToProps(state) {
   return { 
       skills: state.skill.skills.data,
+      skillsAll: state.skill.allSkills.data,
       id: state.skill.id.data,     
       checkAdmin: state.auth.checkAdmin,
       photo: state.auth.photo

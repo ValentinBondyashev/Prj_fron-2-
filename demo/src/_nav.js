@@ -9,8 +9,8 @@ export default {
       }
     },
     {
-      name: 'Zoomable Layout',
-      url: '/zoomablelayout',
+      name: 'Bubble',
+      url: '/bubble',
       icon: 'cui-speedometer icons',
       badge: {
         variant: 'info',

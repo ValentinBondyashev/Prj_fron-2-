@@ -4,6 +4,41 @@ import flare from '../../components/ZoomableLayout/flare.json'
 import { connect } from 'react-redux'
 import { getSkillsAction } from '../../actions/skill'
 import {Button} from 'primereact/components/button/Button'
+import { linearGradientDef } from '@nivo/core'
+
+const fData = {
+  "name": "nivo",
+  "children": [
+    {
+      "name": "viz",
+      "color": "hsl(12, 70%, 50%)",
+      "children": [
+        {
+          "name": "stack",
+          "color": "hsl(12, 70%, 50%)",
+          "children": [
+            {
+              "name": "chart",
+              "color": "hsl(20, 50%, 50%)",
+              "loc": 96876
+            },
+          ]
+        },
+        {
+          "name": "pie",
+          "color": "hsl(65, 70%, 50%)",
+          "children": [
+            {
+              "name": "legends",
+              "color": "hsl(25, 70%, 50%)",
+              "loc": 182468
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
 
 class Bubble extends Component {
   constructor(props) {
@@ -12,7 +47,8 @@ class Bubble extends Component {
     this.state = { 
       color: "d320",
       SkipRadius: 20,
-      clickId : null
+      clickId : null,
+      opacityBubble: "rgba(0, 0, 0, 0.1)",
     };
   }
     createNewArr = (skills) => {
@@ -20,6 +56,7 @@ class Bubble extends Component {
         let other = {}, letter; 
         let obj = {
             "name": "nivo",
+            "color": "hsl(1, 70%, 50%)",
             "children": []}
           skills.forEach(element => {
             letter = element.skillCategoryTitle;
@@ -32,13 +69,21 @@ class Bubble extends Component {
           for(let key in other) {
             obj.children.push({
               "name": key,
+              "color": "hsl(2, 70%, 50%)",
               "children": []
             })
               num++;
             for( var secondKey in other[key]){
-              obj.children[num].children.push(
-                {"name" :other[key][secondKey].skillTitle, "loc" : other[key][secondKey].mark }
-             )}
+              if(other[key][secondKey].skillTitle === "Canvas"){
+                obj.children[num].children.push(
+                  {"name" :other[key][secondKey].skillTitle,  "color": "hsl(22, 50%, 50%)", "loc" : other[key][secondKey].mark }
+               )}
+              else{
+                obj.children[num].children.push(
+                  {"name" :other[key][secondKey].skillTitle,  "color": "hsl(20, 50%, 50%)", "loc" : other[key][secondKey].mark }
+               )}
+              }
+              
            }
            return obj;
       }
@@ -58,70 +103,84 @@ class Bubble extends Component {
 
     changeSkipRadius = (e) => {
       this.setState({SkipRadius: e.target.value})  
-      console.log(e.target.value);
     }
     
     focus = (e) => {
+      /*
+      let nod = e.children;
+      nod.map(element => {
+        element.label = element.id
+      })*/
+      console.log(e);
+      
+      
       this.setState({clickId: e.id})
 
-      if(e.parent === null){
+      if(e.parent === null || e.id == this.state.clickId){
         this.setState({SkipRadius: 50})
+        this.setState({opacityBubble: "rgba(0, 0, 0, 0.1)"});
       }else{
         this.setState({SkipRadius: 0})
+        this.setState({opacityBubble: "rgba(194, 194, 194, 1)"});
       }
       
     }
 
     render(){
-       
+       const { opacityBubble } = this.state;
         return (
             <div style={{padding: '0', height: '1000px'}}>   
               <div style={{margin: "20px"}}>
                 <Button onClick={this.changeColor.bind(this)} className="ui-button-success" value={"d320c"}>1</Button>
                 <Button onClick={this.changeColor.bind(this)} className="ui-button-success" value={"d320b"}>2</Button>
                 <Button onClick={this.changeColor.bind(this)} className="ui-button-success" value={"d320"}>3</Button>
-                <input onChange={this.changeSkipRadius.bind(this)} type="range" min="0" max="100" step="1" value={this.state.SkipRadius}/> 
+                <input onChange={this.changeSkipRadius.bind(this)} type="range" min="6" max="30" step="2" value={this.state.SkipRadius}/> 
               </div>
-                   <ResponsiveBubble
-        root={ this.data()}
-        margin={{
-            "top": 20,
-            "right": 20,
-            "bottom": 20,
-            "left": 20
-        }}
-        identity="name"
-        value="loc"
-        colors={this.state.color}
-        colorBy="name"
-        padding={6}
-        label="id"
-        labelSkipRadius={this.state.SkipRadius}
-        onClick={this.focus.bind(this)}
-        labelTextColor="inherit:darker(0.8)"
-        borderWidth={3}
-        defs={[
-            {
-                "id": "lines",
-                "type": "patternLines",
-                "background": "none",
-                "color": "#6A48D7",
-                "rotation": -45,
-                "lineWidth": 5,
-            }
-        ]}
-        fill={[
-            {
-                "match": {
-                    "depth": 1
-                },
-                "id": "lines"
-            }
-        ]}
-        animate={true}
-        motionStiffness={90}
-        motionDamping={12}
-    />
+            <ResponsiveBubble
+              root={ this.props.skills ? this.data(): fData}
+              margin={{
+                  "top": 20,
+                  "right": 20,
+                  "bottom": 20,
+                  "left": 20
+              }}
+              identity="name"
+              value="loc"
+              // colors={this.state.color}
+              colorBy="color"
+              padding={6}
+              label="id"
+              labelSkipRadius={this.state.SkipRadius}
+              onClick={this.focus.bind(this)}
+              labelTextColor="1"
+              borderWidth={0}
+               /*defs={[
+                   {
+                     "id": "lines",
+                      "type": "patternLines",
+                      "background": "none",
+                      "color": "#6A48D7",
+                      "rotation": -45,
+                      "lineWidth": 5,
+                   },
+             
+
+               ]}*/
+           
+               /*
+              fill={[
+                   {
+                     "match": {
+                         "depth": 1
+                     },
+                     "id": "lines"
+                   },
+
+               ]}*/
+              animate={true}
+              motionStiffness={90}
+              motionDamping={12}
+          />
             </div>
                
         )
@@ -130,13 +189,13 @@ class Bubble extends Component {
 
 function mapStateToProps(state) {
     return { 
-        skills: state.skill.skills.data,
+      skills: state.skill.skills.data,
     };
   }
   function mapDispathToProps(dispatch) {
     return {
         getSkillsFunction: function () {
-            dispatch(getSkillsAction());
+          dispatch(getSkillsAction());
         }
     };
   }

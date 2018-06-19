@@ -1,0 +1,7 @@
+text{ 
+    fill: white !important;
+}
+
+.ui-widget-header {
+    background: linear-gradient(to bottom, rgb(128, 128, 128) 12%, rgb(91, 91, 91) 100%) !important;
+}

@@ -18,7 +18,7 @@ import 'primereact/resources/themes/omega/theme.css';
 import 'font-awesome/css/font-awesome.css';
 import Chart from '../../components/charts/test';
 import ZoomableLayout from '../../components/ZoomableLayout/ZoomableLayout';
-import Bubble from '../Bubble/Bubble'
+import Bubble from '../Bubble/Bubble';
 
 
 class Dashboard extends Component {
@@ -70,13 +70,14 @@ class Dashboard extends Component {
     }
 
     inputTextEditor(props) {
-        return  <InputText  onKeyDown = {(e) => this.onEnter(props, e.target.value, e.keyCode)} 
+        return  <InputText ref={(input) => { this.textInput = input; }} onKeyDown = {(e) => this.onEnter(props, e.target.value, e.keyCode)} 
                             onBlur = {(e) => this.onRowUnselect(props, e.target.value)} 
                             onChange = {(e) => this.onEditorValueChange(props, e.target.value)}
                             type="text" value = {props.rowData[props.field]} />;
     }   
     
     editor(props) {
+        console.log(props)
         return this.inputTextEditor(props);
     }
     

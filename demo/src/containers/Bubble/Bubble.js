@@ -52,7 +52,7 @@ class Bubble extends Component {
     };
   }
     createNewArr = (skills) => {
-   
+
         let other = {}, letter; 
         let obj = {
             "name": "nivo",
@@ -74,16 +74,30 @@ class Bubble extends Component {
             })
               num++;
             for( var secondKey in other[key]){
-              if(other[key][secondKey].skillTitle === "Canvas"){
-                obj.children[num].children.push(
-                  {"name" :other[key][secondKey].skillTitle,  "color": "hsl(22, 50%, 50%)", "loc" : other[key][secondKey].mark }
-               )}
+              if(other[key][secondKey].skillTitle == this.props.editSkill){
+                console.log(other[key][secondKey].mark , this.props.mark)
+                if(other[key][secondKey].mark > this.props.mark){
+                  console.log('>');
+                  obj.children[num].children.push(
+                    {"name" :other[key][secondKey].skillTitle,  "color": "hsl(25, 50%, 50%)", "loc" : other[key][secondKey].mark }
+                 )
+                }else if(other[key][secondKey].mark < this.props.mark){
+                  console.log('<');
+                  obj.children[num].children.push(
+                    {"name" :other[key][secondKey].skillTitle,  "color": "hsl(28, 50%, 50%)", "loc" : other[key][secondKey].mark }
+                 )
+                }else{
+                  console.log('=');
+                  obj.children[num].children.push(
+                    {"name" :other[key][secondKey].skillTitle,  "color": "hsl(20, 50%, 50%)", "loc" : other[key][secondKey].mark }
+                  )
+                }
+                }
               else{
                 obj.children[num].children.push(
-                  {"name" :other[key][secondKey].skillTitle,  "color": "hsl(20, 50%, 50%)", "loc" : other[key][secondKey].mark }
-               )}
-              }
-              
+                  {"name" :other[key][secondKey].skillTitle,  "color": "hsl(23, 50%, 50%)", "loc" : other[key][secondKey].mark }
+                )}
+              }            
            }
            return obj;
       }
@@ -111,8 +125,6 @@ class Bubble extends Component {
       nod.map(element => {
         element.label = element.id
       })*/
-      console.log(e);
-      
       
       this.setState({clickId: e.id})
 
@@ -127,7 +139,8 @@ class Bubble extends Component {
     }
 
     render(){
-       const { opacityBubble } = this.state;
+      console.log(this.props.editSkill, this.props.mark);
+      const { opacityBubble } = this.state;
         return (
             <div style={{padding: '0', height: '1000px'}}>   
               <div style={{margin: "20px"}}>
@@ -190,6 +203,8 @@ class Bubble extends Component {
 function mapStateToProps(state) {
     return { 
       skills: state.skill.skills.data,
+      editSkill: state.skill.editSkill,
+      mark: state.skill.mark,
     };
   }
   function mapDispathToProps(dispatch) {

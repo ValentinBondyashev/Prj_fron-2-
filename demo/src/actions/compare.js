@@ -20,9 +20,11 @@ export const getSkillUserAction = (id) => dispatch => {
     });
 }
 
-export const editAdminSkillsAction = (id,skill) => dispatch => {
+export const editAdminSkillsAction = (id,skill, mark) => dispatch => {
   axios.put(`http://localhost:3010/skills?user_id=${id}`, skill)
   .then(function (response) {
+    const editSkill = JSON.parse(response.config.data).skillTitle;
+    dispatch({ type: 'EDIT_USER_SKILL_ADMIN', payload: {editSkill, mark} });
   })
   .catch(function (error) {
   });

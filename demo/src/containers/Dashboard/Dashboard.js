@@ -69,25 +69,26 @@ class Dashboard extends Component {
         ]);
     }
 
-    inputTextEditor(props) {
+    inputTextEditor(props, mark) {
         return  <InputText ref={(input) => { this.textInput = input; }} onKeyDown = {(e) => this.onEnter(props, e.target.value, e.keyCode)} 
-                            onBlur = {(e) => this.onRowUnselect(props, e.target.value)} 
+                            onBlur = {(e) => { this.onRowUnselect(props, e.target.value, mark)}} 
                             onChange = {(e) => this.onEditorValueChange(props, e.target.value)}
                             type="text" value = {props.rowData[props.field]} />;
     }   
     
     editor(props) {
-        console.log(props)
-        return this.inputTextEditor(props);
+        const mark = props.rowData.mark
+        console.log(props);
+        return this.inputTextEditor(props, mark);
     }
     
     headerTemplate(data) {
         return data.skillCategoryTitle;
     }
 
-    onRowUnselect(props, value) {   
+    onRowUnselect(props, value, mark) {   
         if(this.props.checkAdmin){
-            this.props.editAdminSkillsFunction(props.rowData.userId, props.rowData)
+            this.props.editAdminSkillsFunction(props.rowData.userId, props.rowData, mark)
         }else{
             this.props.editSkillFunction(props['rowData']);
         }
@@ -248,8 +249,8 @@ class Dashboard extends Component {
             createSkillsAction: function (skill){
                 dispatch(createSkillsAction(skill));
             },
-            editAdminSkillsFunction: function (id,skill){
-                dispatch(editAdminSkillsAction(id,skill));
+            editAdminSkillsFunction: function (id,skill,mark){
+                dispatch(editAdminSkillsAction(id,skill,mark));
             },
             createSkillsAdminFunction: function(skill, id){
                 dispatch(createSkillsAdminAction(skill, id));

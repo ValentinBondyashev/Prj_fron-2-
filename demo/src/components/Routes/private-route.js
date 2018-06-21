@@ -9,14 +9,12 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
         rest.token != '' ? (
           <Component {...props} />
         ) : (
-         /* <Redirect
+         <Redirect
             to={{
               pathname: "/",
               state: { from: props.location }
             }}
-          />*/
-
-          <Component {...props} />
+          />
         )
       }
     />

@@ -29,6 +29,10 @@ import './scss/style.css'
 // import { renderRoutes } from 'react-router-config';
 
 class App extends Component {
+  componentWillMount(){
+    this.props.checkAuthFunction();
+  }
+
   render() {
     return (
       <BrowserRouter>
@@ -47,4 +51,17 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return { 
+    token: state.auth.token,
+  };
+}
+function mapDispathToProps(dispatch) {
+  return {
+    checkAuthFunction: () => {
+      dispatch(checkAuthAction());
+    }
+  };
+}
+
+export default connect(mapStateToProps,mapDispathToProps)(App);

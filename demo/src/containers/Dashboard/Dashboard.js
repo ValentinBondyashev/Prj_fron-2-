@@ -28,6 +28,7 @@ class Dashboard extends Component {
             skill: {skillTitle:'', mark: '', disposition: '', comment: ''},
             displayDialog: false,
             idSkill : 1,
+            oldValue: ''
         };
         this.editor = this.editor.bind(this);
         this.headerTemplate = this.headerTemplate.bind(this);
@@ -73,12 +74,21 @@ class Dashboard extends Component {
         return  <InputText ref={(input) => { this.textInput = input; }} onKeyDown = {(e) => this.onEnter(props, e.target.value, e.keyCode)} 
                             onBlur = {(e) => { this.onRowUnselect(props, e.target.value, mark)}} 
                             onChange = {(e) => this.onEditorValueChange(props, e.target.value)}
-                            type="text" value = {props.rowData[props.field]} />;
+                            type="text" value = {props.rowData[props.field]}
+                            onFocus={(e) => {
+                                console.log("target",e.target.value , "state",this.state.oldValue)
+                                if(e.target.value != this.state.oldValue){
+                                    this.setState({oldValue: e.target.value});
+                                    return;
+                                }else{
+                                    return;
+                                }
+                                return;
+                            }} />;
     }   
     
     editor(props) {
         const mark = props.rowData.mark
-        console.log(props);
         return this.inputTextEditor(props, mark);
     }
     
@@ -92,7 +102,7 @@ class Dashboard extends Component {
         }else{
             this.props.editSkillFunction(props['rowData']);
         }
-    }
+    } 
     onEnter(props, value, key) {
         if(key === 13) {
             if(this.props.checkAdmin){
@@ -144,10 +154,11 @@ class Dashboard extends Component {
         this.setState({idSkill:value})
     }
     
-    
     render() {
 
         const { userSkill, skills, id} = this.props
+
+        console.log('---------',this.state.oldValue);
 
         let header = <div style={{'textAlign':'left'}}>
                         <i className="fa fa-search" style={{margin:'4px 4px 0 0'}}></i>

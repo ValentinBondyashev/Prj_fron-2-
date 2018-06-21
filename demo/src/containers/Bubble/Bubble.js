@@ -80,21 +80,20 @@ class Bubble extends Component {
                   console.log('>');
                   obj.children[num].children.push(
                     {"name" :other[key][secondKey].skillTitle,  "color": "hsl(25, 50%, 50%)", "loc" : other[key][secondKey].mark }
-                 )
+                  )
                 }else if(other[key][secondKey].mark < this.props.mark){
                   console.log('<');
                   obj.children[num].children.push(
                     {"name" :other[key][secondKey].skillTitle,  "color": "hsl(28, 50%, 50%)", "loc" : other[key][secondKey].mark }
-                 )
+                  )
                 }else{
                   console.log('=');
                   obj.children[num].children.push(
                     {"name" :other[key][secondKey].skillTitle,  "color": "hsl(20, 50%, 50%)", "loc" : other[key][secondKey].mark }
-                  )
-                }
+                  )}
                 }
               else{
-                obj.children[num].children.push(
+                  obj.children[num].children.push(
                   {"name" :other[key][secondKey].skillTitle,  "color": "hsl(23, 50%, 50%)", "loc" : other[key][secondKey].mark }
                 )}
               }            
@@ -116,6 +115,7 @@ class Bubble extends Component {
     }
 
     changeSkipRadius = (e) => {
+      console.log(e.target.value)
       this.setState({SkipRadius: e.target.value})  
     }
     
@@ -139,7 +139,6 @@ class Bubble extends Component {
     }
 
     render(){
-      console.log(this.props.editSkill, this.props.mark);
       const { opacityBubble } = this.state;
         return (
             <div style={{padding: '0', height: '1000px'}}>   
@@ -147,7 +146,7 @@ class Bubble extends Component {
                 <Button onClick={this.changeColor.bind(this)} className="ui-button-success" value={"d320c"}>1</Button>
                 <Button onClick={this.changeColor.bind(this)} className="ui-button-success" value={"d320b"}>2</Button>
                 <Button onClick={this.changeColor.bind(this)} className="ui-button-success" value={"d320"}>3</Button>
-                <input onChange={this.changeSkipRadius.bind(this)} type="range" min="6" max="30" step="2" value={this.state.SkipRadius}/> 
+                <input onChange={this.changeSkipRadius.bind(this)} type="range" min="16" max="56" step="3" value={this.state.SkipRadius}/> 
               </div>
             <ResponsiveBubble
               root={ this.props.skills ? this.data(): fData}

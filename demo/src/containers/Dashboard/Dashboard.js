@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import './Dashboard.scss';
 import {DataTable} from 'primereact/components/datatable/DataTable';
 import {Dialog} from 'primereact/components/dialog/Dialog';
@@ -16,12 +16,9 @@ import { editAdminSkillsAction } from '../../actions/compare';
 import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/omega/theme.css';
 import 'font-awesome/css/font-awesome.css';
-import Chart from '../../components/charts/test';
-import ZoomableLayout from '../../components/ZoomableLayout/ZoomableLayout';
 import Bubble from '../Bubble/Bubble';
 
-
-class Dashboard extends Component {
+class Dashboard extends PureComponent {
     constructor() {
         super();
         this.state = {
@@ -34,8 +31,9 @@ class Dashboard extends Component {
         this.headerTemplate = this.headerTemplate.bind(this);
         this.footerTemplate = this.footerTemplate.bind(this);
         this.onRowUnselect = this.onRowUnselect.bind(this);
-        this.onEnter = this.onEnter.bind(this);
+        this.onEnter = this.onEnter.bind(this);        
     }
+
     componentWillMount() {
         this.props.getSkillsFunction(); 
         this.props.getdCategoriesFunction();
@@ -71,20 +69,11 @@ class Dashboard extends Component {
     }
 
     inputTextEditor(props, mark) {
-        return  <InputText ref={(input) => { this.textInput = input; }} onKeyDown = {(e) => this.onEnter(props, e.target.value, e.keyCode)} 
+        return  <InputText ref={(input) => { this.textInput = input; }} onKeyDown = {(e) => this.onEnter(props, e.target, e.keyCode)} 
                             onBlur = {(e) => { this.onRowUnselect(props, e.target.value, mark)}} 
                             onChange = {(e) => this.onEditorValueChange(props, e.target.value)}
                             type="text" value = {props.rowData[props.field]}
-                            onFocus={(e) => {
-                                console.log("target",e.target.value , "state",this.state.oldValue)
-                                if(e.target.value != this.state.oldValue){
-                                    this.setState({oldValue: e.target.value});
-                                    return;
-                                }else{
-                                    return;
-                                }
-                                return;
-                            }} />;
+                        />;
     }   
     
     editor(props) {
@@ -104,6 +93,7 @@ class Dashboard extends Component {
         }
     } 
     onEnter(props, value, key) {
+        value.parentElement.parentElement.style.background = "#A0DDA0";
         if(key === 13) {
             if(this.props.checkAdmin){
                 this.props.editAdminSkillsFunction(props.rowData.userId, props.rowData)
@@ -156,9 +146,7 @@ class Dashboard extends Component {
     
     render() {
 
-        const { userSkill, skills, id} = this.props
-
-        console.log('---------',this.state.oldValue);
+        const { userSkill, skills, id } = this.props
 
         let header = <div style={{'textAlign':'left'}}>
                         <i className="fa fa-search" style={{margin:'4px 4px 0 0'}}></i>
@@ -166,11 +154,11 @@ class Dashboard extends Component {
                     </div>;
 
         let footer = <div className="ui-helper-clearfix" style={{width:'100%'}}>
-                        <Button style={{float:'left'}} icon="fa-plus" label="Add" onClick={this.addNew}/>
+                        <Button style={{float:'left'}} icon="fa fa-plus" label="Add" onClick={this.addNew}/>
                     </div>;
 
         let dialogFooter =  <div className="ui-dialog-buttonpane ui-helper-clearfix">
-                                <Button label="Save" icon="fa-check" onClick={this.save}/>
+                                <Button label="Save" icon="fa fa-check" onClick={this.save}/>
                             </div>;
         return (
             <div>
@@ -198,8 +186,8 @@ class Dashboard extends Component {
                             <DropDownMenu value={this.state.idSkill} onChange={this.handleChange}>{
                                 id ? id.map((el,index) => (
                                     <MenuItem key={index} value={el.id} primaryText={el.title} />
-                                )): null
-                            }</DropDownMenu>
+                                )): null }
+                            </DropDownMenu>
                             </div>
                         </div>
                         <div className="ui-grid-row">
@@ -265,8 +253,7 @@ class Dashboard extends Component {
             },
             createSkillsAdminFunction: function(skill, id){
                 dispatch(createSkillsAdminAction(skill, id));
-            }
-            
+            }      
         };
     }
 

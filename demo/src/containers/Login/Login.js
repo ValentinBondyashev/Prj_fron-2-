@@ -10,7 +10,6 @@ import { Link } from 'react-router-dom';
 
 class Login extends Component {
   constructor(props) {
-
     super(props);
     this.state = { 
         email: '',
@@ -19,7 +18,6 @@ class Login extends Component {
     this.login = this.login.bind(this);
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
-
   }
 
   login() {
@@ -51,7 +49,7 @@ class Login extends Component {
                                                 flexDirection: "column",
                                                 alignItems: "center",
                                                 width: "300px"}}>
-                <CardText className="input-container"
+                <CardText   className="input-container"
                             onKeyDown={(e) => this.onEnter( e.target.value, e.keyCode)}>
                     <TextField 
                         value={this.state.email}  

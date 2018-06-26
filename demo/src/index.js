@@ -9,7 +9,7 @@ import { createStore, applyMiddleware } from 'redux';
 import rootReducer from './redusers';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
-import * as d3 from "d3";
+
 // import registerServiceWorker from './registerServiceWorker';
 
 const store = createStore(rootReducer,composeWithDevTools(applyMiddleware(thunk)));

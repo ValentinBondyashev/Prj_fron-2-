@@ -21,7 +21,7 @@ class Compare extends Component {
   }
 
   getSkill(id) {
-        this.props.getSkillUserFunction(id);
+    this.props.getSkillUserFunction(id);
   }
 
   render() {  
@@ -29,9 +29,9 @@ class Compare extends Component {
     const {allSkills, userSkill} = this.props;
     return (
         <div className="general" >
-                <UserTable allSkills={allSkills}/>   
-                {userSkill ? <Dashboard userSkill={userSkill} />: null }
-                {userSkill ? <Bubble userSkill={userSkill}/> : null}  
+            <UserTable allSkills={allSkills}/>   
+            {userSkill ? <Dashboard userSkill={userSkill} />: null }
+            {userSkill ? <Bubble userSkill={userSkill}/> : null}  
         </div>
     );
   }

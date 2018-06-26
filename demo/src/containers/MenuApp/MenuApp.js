@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Container, Nav, NavItem, NavLink, Badge, DropdownToggle, DropdownMenu } from 'reactstrap';
-import ZoomableLayout from '../../components/ZoomableLayout/ZoomableLayout';
 import Dashboard from '../../containers/Dashboard/Dashboard';
 import { connect } from 'react-redux';
 import { getSkillsAction, editSkillsAction, createSkillsAction, getIdCategoriesAction } from '../../actions/skill'; 

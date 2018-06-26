@@ -1,6 +1,5 @@
 
 import Full from './containers/MenuApp/MenuApp.js';
-import ZoomableLayout from './components/ZoomableLayout/ZoomableLayout';
 import Compare from './containers/Compare/Compare';
 import Dashboard from './containers/Dashboard/Dashboard';
 import Bubble from './containers/Bubble/Bubble';

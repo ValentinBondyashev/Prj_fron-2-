@@ -27,7 +27,7 @@ class Dashboard extends Component {
             return <div style={{textAlign: 'left'}}>No Selection</div>;
         }
         else {
-        this.props.getSkillUserFunction(data.uid)
+            this.props.getSkillUserFunction(data.id)
             return <div style={{textAlign: 'left'}}>Selected User: {data.uid + ' - ' + data.email }</div>
         }
         
@@ -41,8 +41,10 @@ class Dashboard extends Component {
                         footer={this.displaySelection(this.state.allSkills)}
                         selection={this.state.allSkills} onSelectionChange={(e) => this.setState({allSkills: e.data})}>
                         <Column field="email"  header="email"/>
-                        <Column field="uid"  header="id"/>
-                        <Column field="tokensValidAfterTime"  header="Date registration"/>
+                        <Column field="name"  header="name"/>
+                        <Column field="id"  header="id"/>
+                        <Column field="created_at"  header="Data registration"/>
+
                     </DataTable>
                 </div>
           

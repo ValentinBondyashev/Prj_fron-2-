@@ -11,6 +11,7 @@ class Register extends Component {
   constructor(props) {
     super(props);
     this.state = { 
+        name: '',
         email: '',
         password: ''
     };
@@ -23,13 +24,17 @@ class Register extends Component {
   }
 
   register = () => {
-    this.props.registerFunction(this.state.email, this.state.password);
+    this.props.registerFunction(this.state.email, this.state.password, this.state.name);
   }
 
   onEnter(value, key) {
     if(key === 13) {
         this.register();
         }
+    }
+
+    handleChangeName = (e) => {
+        this.setState({ name: e.target.value });
     }
 
   handleChangeEmail = (e) => {
@@ -49,6 +54,11 @@ class Register extends Component {
                                                 width: "300px"}}>
                 <CardText className="input-container"
                             onKeyDown={(e) => this.onEnter( e.target.value, e.keyCode)} >
+                     <TextField 
+                        value={this.state.name}  
+                        onChange={this.handleChangeName} 
+                        floatingLabelText="Name" 
+                    />
                     <TextField 
                         value={this.state.email}  
                         onChange={this.handleChangeEmail} 
@@ -77,8 +87,8 @@ function mapStateToProps(state) {
 }
 function mapDispathToProps(dispatch) {
     return {
-        registerFunction: function (email, password){
-            dispatch(registerAction(email, password));
+        registerFunction: function (email, password, name){
+            dispatch(registerAction(email, password, name));
         }
     };
 }

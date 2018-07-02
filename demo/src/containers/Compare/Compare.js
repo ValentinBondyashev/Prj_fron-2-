@@ -25,7 +25,7 @@ class Compare extends Component {
   }
 
   render() {  
-
+    
     const {allSkills, userSkill} = this.props;
     return (
         <div className="general" >

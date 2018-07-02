@@ -3,6 +3,7 @@ let defaultState = {
     status: '',
     checkAdmin: false,
     photo: '',
+    MyID: null
 };
 
 export function auth(state = defaultState, action) {
@@ -10,9 +11,7 @@ export function auth(state = defaultState, action) {
         case 'CHECK_AUTH':
             return {...state, token: action.payload.token};
         case 'LOGIN_SUCCESS':
-            return {...state, token: action.payload.token, status: 'success'};
-        case 'LOGIN_GOOGLE_SUCCESS':
-            return {...state, token: action.payload.token, photo: action.payload.photo, status: 'success'};
+            return {...state, token: action.payload.token,MyID: action.payload.MyID ,status: 'success'};
         case 'LOGIN_ERROR': 
             return {...state, status: 'error'};
         case 'CHECK_ADMIN': 

@@ -29,8 +29,8 @@ import './scss/style.css'
 // import { renderRoutes } from 'react-router-config';
 
 class App extends Component {
-  componentWillMount(){
-    this.props.checkAuthFunction();
+  componentDidMount(){
+    this.props.checkAuthFunction(this.props.token);
   }
 
   render() {

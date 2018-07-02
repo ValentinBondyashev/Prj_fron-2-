@@ -1,20 +1,15 @@
 import axios from 'axios';
 import firebase from 'firebase';
+import jwt_decode from 'jwt-decode';
 
-var config = {
-  apiKey: "AIzaSyDVu1y_aQRqWwVtPrWG3pja-KwO2F18Ahg",
-  authDomain: "my-skills-b62f7.firebaseapp.com",
-  databaseURL: "https://my-skills-b62f7.firebaseio.com",
-  projectId: "my-skills-b62f7",
-  storageBucket: "my-skills-b62f7.appspot.com",
-  messagingSenderId: "398652311383"
-};
-
+const header = {Authorization: "Bearer " + localStorage.token};
 
 export const getCheckAdminAction = () => dispatch => {
-  axios.get('http://localhost:3010/skills/check_admin', {})
+  axios.get('http://localhost:3010/skills/check_admin', {},{
+    headers: header
+  })
   .then(function (response) {
-    dispatch({ type: 'CHECK_ADMIN', payload: response.data.message.isAdmin });
+    dispatch({ type: 'CHECK_ADMIN', payload: response.data.isAdmin });
   })
   .catch(function (error) {  
   });
@@ -22,49 +17,17 @@ export const getCheckAdminAction = () => dispatch => {
 }
 
 export const loginAction = (email, password) => dispatch => {
-  if (!firebase.apps.length) {
-    firebase.initializeApp(config);
-  }
-
-  firebase.auth().signInWithEmailAndPassword(email, password).then(function(data) {
-   localStorage.setItem('token', firebase.auth().currentUser.qa);
-
-   let payload =  {
-    token: firebase.auth().currentUser.qa,
-  };
-    dispatch({ type: 'LOGIN_SUCCESS', payload: payload });
-    
-  }).catch(function(error) {
+  axios.post('http://localhost:3010/login', {email, password})
+  .then(function (response) {
+    localStorage.setItem('token', response.data);
+    localStorage.setItem('id', jwt_decode(response.data).id);
+    dispatch({ type: 'LOGIN_SUCCESS', payload: {token: response.data, MyID: jwt_decode(response.data).id }});
+  })
+  .catch(function (error) {  
     dispatch({ type: 'LOGIN_ERROR' });
   });
-
 }
 
-
-export const loginGoogleAction = () => dispatch => {
-  if (!firebase.apps.length) {
-    firebase.initializeApp(config);
-  }
-  var provider = new firebase.auth.GoogleAuthProvider();
-  firebase.auth().signInWithPopup(provider).then(function(result) {
-    var token = result.credential.accessToken;
-    var user = result.user;
-    localStorage.setItem('token', firebase.auth().currentUser.qa);
-   let payload =  {
-    token: firebase.auth().currentUser.qa,
-    photo: result.user.photoURL
-  };
-    dispatch({ type: 'LOGIN_GOOGLE_SUCCESS', payload: payload });
-    
-  
-  }).catch(function(error) {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    var email = error.email;
-    var credential = error.credential;
-  });
-
-}
 
 export function checkAuthAction() {
     let token = localStorage.getItem('token');

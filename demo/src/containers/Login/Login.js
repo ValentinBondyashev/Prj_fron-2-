@@ -4,7 +4,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Button } from 'primereact/components/button/Button';
 import { connect } from 'react-redux';
-import { loginAction,loginGoogleAction } from '../../actions/auth'; 
+import { loginAction } from '../../actions/auth'; 
 import {Password} from 'primereact/components/password/Password';
 import { Link } from 'react-router-dom';
 
@@ -64,7 +64,7 @@ class Login extends Component {
                 </CardText>
                 <CardActions>
                     <RaisedButton onClick={this.login} className="login-button" label="Login" primary={true} />
-                    <RaisedButton onClick={this.props.loginGoogleFunction} primary={true}  label="Google"/>
+                    <Button><Link className="link_login" to='/register'>Register</Link></Button>
                 </CardActions>
             </Card>
         </div>
@@ -83,9 +83,6 @@ function mapDispathToProps(dispatch) {
         loginFunction: function (email, password) {
             dispatch(loginAction(email, password));
         },
-        loginGoogleFunction: function () {
-            dispatch(loginGoogleAction());
-        }
     };
 }
 

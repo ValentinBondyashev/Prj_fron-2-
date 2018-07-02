@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import './Dashboard.scss';
 import {DataTable} from 'primereact/components/datatable/DataTable';
 import {Dialog} from 'primereact/components/dialog/Dialog';
@@ -18,7 +18,7 @@ import 'primereact/resources/themes/omega/theme.css';
 import 'font-awesome/css/font-awesome.css';
 import Bubble from '../Bubble/Bubble';
 
-class Dashboard extends PureComponent {
+class Dashboard extends  Component{
     constructor() {
         super();
         this.state = {
@@ -35,7 +35,7 @@ class Dashboard extends PureComponent {
     }
 
     componentWillMount() {
-        this.props.getSkillsFunction(); 
+        this.props.getSkillsFunction(this.props.MyID); 
         this.props.getdCategoriesFunction();
     }
     
@@ -82,24 +82,18 @@ class Dashboard extends PureComponent {
     }
     
     headerTemplate(data) {
-        return data.skillCategoryTitle;
+        return data.skill.skillsCategory.description;
     }
 
     onRowUnselect(props, value, mark) {   
-        if(this.props.checkAdmin){
-            this.props.editAdminSkillsFunction(props.rowData.userId, props.rowData, mark)
-        }else{
-            this.props.editSkillFunction(props['rowData']);
-        }
+        this.props.editAdminSkillsFunction(props.rowData.userId, props.rowData, mark)
     } 
+    
     onEnter(props, value, key) {
-        value.parentElement.parentElement.style.background = "#A0DDA0";
+        value.parentElement.parentElement.parentElement.style.background = "#A0DDA0";
         if(key === 13) {
-            if(this.props.checkAdmin){
-                this.props.editAdminSkillsFunction(props.rowData.userId, props.rowData)
-            }else{
-                this.props.editSkillFunction(props['rowData']);
-            }
+            console.log(props.rowData.userId,props.rowData.skillId, Number(props.rowData.mark))
+            this.props.editAdminSkillsFunction(props.rowData.userId,props.rowData.skillId, Number(props.rowData.mark)) 
         }
     }
     save = () => {
@@ -143,7 +137,9 @@ class Dashboard extends PureComponent {
     handleChange = (e, index, value) => {
         this.setState({idSkill:value})
     }
-    
+
+   
+
     render() {
 
         const { userSkill, skills, id } = this.props
@@ -165,12 +161,12 @@ class Dashboard extends PureComponent {
                 <div className="content-section implementation" style={{padding: '0', minHeight: '100px'}}>
                 <DataTable header="Технологии"  value={userSkill ? userSkill : skills} 
                                                 rowGroupMode="subheader"  footer={footer} 
-                                                groupField="skillCategoryTitle" 
+                                                groupField="skill.skillsCategory.description" 
                                                 rowGroupFooterTemplate={this.footerTemplate}  
                                                 rowGroupHeaderTemplate={this.headerTemplate} 
                                                 globalFilter={this.state.globalFilter}
                                                 paginator={true} rows={10} header={header}>           
-                    <Column field="skillTitle"  header="Технология"/>
+                    <Column field="skill.title"  header="Технология"/>
                     <Column field="mark" header="Скилл от 1 до 10 :" editor={this.editor}/>
                     <Column field="disposition" header="Желание от 1 до 10 :" editor={this.editor}/>
                     <Column field="comment" header="Комментарий" editor={this.editor}/>
@@ -228,16 +224,17 @@ class Dashboard extends PureComponent {
    
     function mapStateToProps(state) {
         return { 
-            skills: state.skill.skills.data,
+            skills: state.skill.skills,
             id: state.skill.id.data,
             checkAdmin: state.auth.checkAdmin,
+            MyID: state.auth.MyID,
             userId: state.skill.userId
         };
     }
     function mapDispathToProps(dispatch) {
         return {
-            getSkillsFunction: function () {
-                dispatch(getSkillsAction());
+            getSkillsFunction: function (id) {
+                dispatch(getSkillsAction(id));
             },
             getdCategoriesFunction: function () {
                 dispatch(getIdCategoriesAction());
@@ -248,8 +245,8 @@ class Dashboard extends PureComponent {
             createSkillsAction: function (skill){
                 dispatch(createSkillsAction(skill));
             },
-            editAdminSkillsFunction: function (id,skill,mark){
-                dispatch(editAdminSkillsAction(id,skill,mark));
+            editAdminSkillsFunction: function (userId,skillId,mark){
+                dispatch(editAdminSkillsAction(userId,skillId,mark));
             },
             createSkillsAdminFunction: function(skill, id){
                 dispatch(createSkillsAdminAction(skill, id));

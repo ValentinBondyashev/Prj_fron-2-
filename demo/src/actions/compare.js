@@ -1,10 +1,11 @@
 import axios from 'axios';
 
-export const getAllSkillsAction = () => dispatch => {
 
+
+export const getAllSkillsAction = () => dispatch => {
   axios.get('http://localhost:3010/skills/all_users', {})
   .then(function (response) {
-    dispatch({ type: 'SUCCES_GET_ALL_SKILLS', payload: response['data'].data.users });
+    dispatch({ type: 'SUCCES_GET_ALL_SKILLS', payload: response['data'] });
   })
   .catch(function (error) {  
   });
@@ -12,17 +13,23 @@ export const getAllSkillsAction = () => dispatch => {
 }
 
 export const getSkillUserAction = (id) => dispatch => {
-    axios.get(`http://localhost:3010/skills/?user_id=${id}`)
+    axios.get(`http://localhost:3010/skills/${id}`)
     .then(function (response) {
-        dispatch({ type: 'SUCCES_GET_USER_SKILL', payload: {data :response['data'].data, id: id} });
+      console.log(id)
+        dispatch({ type: 'SUCCES_GET_USER_SKILL', payload: {data :response.data, id: id} });
     })
-    .catch(function (error) {  
+    .catch(function (error){ 
     });
 }
 
-export const editAdminSkillsAction = (id,skill, mark) => dispatch => {
-  axios.put(`http://localhost:3010/skills?user_id=${id}`, skill)
-  .then(function (response) {
+export const editAdminSkillsAction = (userId, skillId, mark) => dispatch => {
+  console.log(userId, skillId, mark)
+  axios.put(`http://localhost:3010/skills`, {userId, skillId, mark},{
+    headers: {
+      'Content-Type': 'x-www-form-urlencoded',
+      'Authorization': "Bearer " + localStorage.token
+    }})
+  .then(function (response){
     const editSkill = JSON.parse(response.config.data).skillTitle;
     dispatch({ type: 'EDIT_USER_SKILL_ADMIN', payload: {editSkill, mark} });
   })

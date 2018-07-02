@@ -10,7 +10,7 @@ let defaultState = {
 
 export function skill(state = defaultState, action) {
     switch (action.type) {
-        case 'SUCCES_GET_ALL_SKILLS':
+        case 'SUCCES_GET_ALL_SKILLS': 
             return {...state, allSkills: action.payload};
         case 'SUCCES_GET_USER_SKILL':
             return {...state, userSkill: action.payload.data, userId: action.payload.id};

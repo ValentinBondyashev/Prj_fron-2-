@@ -2,7 +2,7 @@ import axios from 'axios';
 import { setInterval } from 'timers';
 
 axios.interceptors.request.use((config)=>{  
-  const token = localStorage.getItem("token");
+  const token = localStorage.token;
   config.headers.Authorization = `Bearer ${token}`;
   config.headers["Content-Type"] = `application/json`;
   return config;
@@ -13,18 +13,18 @@ axios.interceptors.response.use(
     return response
     }, function (error){
       if (401 === error.response.status){  
-        localStorage.removeItem('token');
+        localStorage.token;
         window.location.reload();
     }
   } 
 );
 
 
-export const getSkillsAction = () => dispatch => {
 
-  axios.get('http://localhost:3010/skills', {})
+export const getSkillsAction = (id) => dispatch => {
+  axios.get(`http://localhost:3010/skills/${localStorage.id}`, {})
   .then(function (response) {
-    dispatch({ type: 'SUCCES_GET_SKILLS', payload: response['data'] });
+    dispatch({ type: 'SUCCES_GET_SKILLS', payload: response.data });
   })
   .catch(function (error) {  
   });
@@ -54,8 +54,8 @@ export const createSkillsAdminAction = (skill, id) => dispatch => {
   });
 
 }
-export const editSkillsAction = (skill) => dispatch => {
-  axios.put('http://localhost:3010/skills', skill)
+export const editSkillsAction = (userID, skillID, mark) => dispatch => {
+  axios.put('http://localhost:3010/skills', {userID, skillID, mark})
   .then(function (response) {
   })
   .catch(function (error) {

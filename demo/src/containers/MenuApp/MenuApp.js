@@ -32,6 +32,7 @@ import logo from '../../assets/img/brand/logo.png'
 import sygnet from '../../assets/img/brand/sygnet.svg'
 import avatar from '../../assets/img/avatars/6.jpg'
 
+
 class MenuApp extends Component {
   constructor() {
     super();
@@ -85,20 +86,24 @@ class MenuApp extends Component {
             <Container fluid>
               <Switch>
                 {routes.map((route, idx) => {
-                    return route.component ? (<Route key={idx} path={route.path} exact={route.exact} name={route.name} render={props => (
+                    return route.component ? (
+                      <Route key={idx} path={route.path} exact={route.exact} name={route.name} render={props => (
                         <route.component {...props} />
                       )} />)
                       : (null);
                   },
                 )}
-                <Redirect from="/" to="/dashboard" />
+                
+                { checkAdmin ? <Redirect from="/" to="/compare" /> : <Redirect from="/" to="/dashboard" />}
                 <Redirect from="/" to="/bubble" />
                 { checkAdmin ? <Redirect from="/" to="/compare" /> : null}
               </Switch>
             </Container>
           </main>
           <AppAside fixed hidden display="lg">
-            Aside
+            {
+              this.props.changedSkills.map(e => `User${e.userId} :::: ${e.skill_old} ---> ${e.skill_new} ;`  )
+            }
           </AppAside>
         </div>
         <AppFooter>
@@ -114,7 +119,8 @@ function mapStateToProps(state) {
       skillsAll: state.skill.allSkills.data,
       id: state.skill.id.data,     
       checkAdmin: state.auth.checkAdmin,
-      photo: state.auth.photo
+      photo: state.auth.photo,
+      changedSkills: state.skill.changedSkills
   };
 }
 function mapDispathToProps(dispatch) {

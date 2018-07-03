@@ -35,7 +35,7 @@ export const getIdCategoriesAction = () => dispatch => {
   
   axios.get('http://localhost:3010/skills/categories', {})
   .then(function (response) {
-    dispatch({ type: 'GET_ID_SKILLS', payload: response['data'] });
+    dispatch({ type: 'GET_ID_SKILLS', payload: response.data });
   })
   .catch(function (error) {  
   });
@@ -67,7 +67,7 @@ export const createSkillsAction = (skill) => dispatch => {
 
   axios.post('http://localhost:3010/skills', skill)
   .then(function (response) {
-    axios.get('http://localhost:3010/skills', {})
+    axios.get(`http://localhost:3010/skills${localStorage.id}`, {})
     .then(function (response) {
       dispatch({ type: 'SUCCES_GET_SKILLS', payload: response['data'] });
     })

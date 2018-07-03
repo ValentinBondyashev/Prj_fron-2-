@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { getSkillsAction } from '../../actions/skill'
 import { linearGradientDef } from '@nivo/core'
 
+
 const fData = {
   "name": "nivo",
   "color": "hsl(12, 70%, 50%)",
@@ -26,48 +27,13 @@ class Bubble extends Component {
     };
     
   }
-
-
-
-  createNewArr = (skills) => {
-    let other = {}, letter; 
-    let obj = {
-        "name": "nivo",
-        "color": "hsl(263, 67%, 31%)",
-        "children": []}
-      skills.forEach(element => {
-        letter = element.skillCategoryTitle;
-            if (!(letter in other))
-                other[letter] = [];     
-            other[letter].push(element);
-      });
-        var num = -1;
-      for(let key in other) {
-        obj.children.push({
-          "name": key,
-          "color": "hsl(235, 89%, 64%)",
-          "children": []})
-          num++;
-        for(var secondKey in other[key]){
-          if(other[key][secondKey].skillTitle == this.props.editSkill){
-              obj.children[num].children.push(
-                {"name" :other[key][secondKey].skillTitle,  "color": "hsl(0, 0%, 89%)", "loc" : other[key][secondKey].mark }
-              )
-            }
-          else{
-              obj.children[num].children.push(
-                {"name" :other[key][secondKey].skillTitle,  "color": "hsl(0, 0%, 89%)", "loc" : other[key][secondKey].mark }
-            )}
-          }            
-        }
-        return obj;
-  }
+ 
 
   data = () =>{
     if(this.props.userSkill ){
-      return this.createNewArr(this.props.userSkill) ;
+      return this.sort(this.props.userSkill) ;
     }else{
-      return this.createNewArr(this.props.skills);
+      return this.sort(this.props.skills);
     }
   }
   
@@ -86,20 +52,67 @@ class Bubble extends Component {
   }
 
 
-
+  sort = (data) => {
+    let other = {}, letter; 
+    let obj = {
+      "name": "nivo",
+      "color": "hsl(263, 67%, 31%)",
+      "children": []}
+    data.map(element => {
+      letter = element.skill.categoryId;
+      if (!(letter in other))
+          other[letter] = [];     
+      other[letter].push(element);
+    })
+    var num = -1;
+    for(let key in other) {  
+      obj.children.push({
+        "name": key,
+        "color": "hsl(235, 89%, 64%)",
+        "children": []})
+        num++;
+      for(var secondKey in other[key]){
+        /*
+        for(var i = 0; i < this.props.changedSkills.length; i++){
+          console.log('---------', other[key][secondKey].skill.id , this.props.changedSkills[i]['userSkill.skillId'])
+          if(other[key][secondKey].skill.id == this.props.changedSkills[i]['userSkill.skillId']){
+            obj.children[num].children.push(
+              {"name" :other[key][secondKey].skill.title,  "color": "hsl(129, 88%, 51%)", "loc" : other[key][secondKey].mark }
+            )
+          }
+        }
+        */
+        if(other[key][secondKey].skill.id === this.props.changedSkills[0]['userSkill.skillId']){
+          if(other[key][secondKey].mark > this.props.changedSkills[0]['skill_new']){
+            obj.children[num].children.push(
+              {"name" :other[key][secondKey].skill.title,  "color": "hsl(129, 88%, 51%)", "loc" : other[key][secondKey].mark }
+            )
+          }else{
+            obj.children[num].children.push(
+              {"name" :other[key][secondKey].skill.title,  "color": "hsl(249, 100%, 59%)", "loc" : other[key][secondKey].mark }
+            )
+          }
+          }
+        else{
+            obj.children[num].children.push(
+              {"name" :other[key][secondKey].skill.title,  "color": "hsl(0, 0%, 89%)", "loc" : other[key][secondKey].mark }
+          )}
+        }            
+      }
+      return obj
+  }
 
   render(){
     let ar;
     const { SkipRadius } = this.state;
-    console.log(this.props.skills.map(e =>  e.skill.categoryId))
-
+    console.log(this.props.userSkill)
       return (
           <div style={{padding: '0', height: '1000px'}}>   
             <div style={{margin: "20px"}}>
               <input onChange={this.changeSkipRadius.bind(this)} type="range" min="16" max="56" step="3" value={SkipRadius}/> 
             </div>
           <ResponsiveBubble
-            root={  fData }
+            root={ this.props.skills ? this.data(this.props.skills) : fData }
             margin={{
               "top": 20,
               "right": 20,
@@ -130,6 +143,7 @@ function mapStateToProps(state) {
       skills: state.skill.skills,
       editSkill: state.skill.editSkill,
       mark: state.skill.mark,
+      changedSkills: state.skill.changedSkills
     };
   }
   function mapDispathToProps(dispatch) {

@@ -18,6 +18,8 @@ import 'primereact/resources/themes/omega/theme.css';
 import 'font-awesome/css/font-awesome.css';
 import Bubble from '../Bubble/Bubble';
 
+
+
 class Dashboard extends  Component{
     constructor() {
         super();
@@ -36,7 +38,9 @@ class Dashboard extends  Component{
 
     componentWillMount() {
         this.props.getSkillsFunction(this.props.MyID); 
-        this.props.getdCategoriesFunction();
+        this.props.getIdCategoriesFunction();
+        
+
     }
     
     onEditorValueChange(props, value) {
@@ -70,7 +74,7 @@ class Dashboard extends  Component{
 
     inputTextEditor(props, mark) {
         return  <InputText ref={(input) => { this.textInput = input; }} onKeyDown = {(e) => this.onEnter(props, e.target, e.keyCode)} 
-                            onBlur = {(e) => { this.onRowUnselect(props, e.target.value, mark)}} 
+                            onBlur = {(e) =>  this.onRowUnselect(props, e.target.value, mark)} 
                             onChange = {(e) => this.onEditorValueChange(props, e.target.value)}
                             type="text" value = {props.rowData[props.field]}
                         />;
@@ -92,7 +96,6 @@ class Dashboard extends  Component{
     onEnter(props, value, key) {
         value.parentElement.parentElement.parentElement.style.background = "#A0DDA0";
         if(key === 13) {
-            console.log(props.rowData.userId,props.rowData.skillId, Number(props.rowData.mark))
             this.props.editAdminSkillsFunction(props.rowData.userId,props.rowData.skillId, Number(props.rowData.mark)) 
         }
     }
@@ -104,11 +107,8 @@ class Dashboard extends  Component{
             "disposition":this.state.skill.disposition,
             "comment":this.state.skill.comment
         }
-        if(this.props.checkAdmin){
-            this.props.createSkillsAdminFunction(data, this.props.userId);
-        }else{
-            this.props.createSkillsAction(data);
-        }     
+        this.props.createSkillsAction(data);
+             
         this.setState({displayDialog: false});
     }
     updateProperty = (property, value) => {
@@ -141,7 +141,6 @@ class Dashboard extends  Component{
    
 
     render() {
-
         const { userSkill, skills, id } = this.props
 
         let header = <div style={{'textAlign':'left'}}>
@@ -225,7 +224,7 @@ class Dashboard extends  Component{
     function mapStateToProps(state) {
         return { 
             skills: state.skill.skills,
-            id: state.skill.id.data,
+            id: state.skill.id,
             checkAdmin: state.auth.checkAdmin,
             MyID: state.auth.MyID,
             userId: state.skill.userId
@@ -236,7 +235,7 @@ class Dashboard extends  Component{
             getSkillsFunction: function (id) {
                 dispatch(getSkillsAction(id));
             },
-            getdCategoriesFunction: function () {
+            getIdCategoriesFunction: function () {
                 dispatch(getIdCategoriesAction());
             },
             editSkillFunction: function (skill) {

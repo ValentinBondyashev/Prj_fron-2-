@@ -6,7 +6,7 @@ import Login from '../src/containers/Login/Login';
 import Register from '../src/containers/Register/Register';
 import Full from './containers/MenuApp/MenuApp.js';
 import { connect } from 'react-redux';
-import loginAction, { checkAuthAction } from '../src/actions/auth'; 
+import loginAction, { checkAuthAction, getCheckAdminAction } from '../src/actions/auth'; 
 import PrivateRoute from '../src/components/Routes/private-route';
 import NoAuthRoute from '../src/components/Routes/no-auth-route';
 
@@ -31,6 +31,10 @@ import './scss/style.css'
 class App extends Component {
   componentDidMount(){
     this.props.checkAuthFunction(this.props.token);
+    
+  }
+  componentWillMount(){
+    this.props.getCheckAdminFunction();
   }
 
   render() {
@@ -41,7 +45,7 @@ class App extends Component {
           <Switch>
             <NoAuthRoute exact path='/' component={Login}/>
             <NoAuthRoute  path='/register' component={Register}/>
-            <PrivateRoute path="/"  component={Full} />
+            <PrivateRoute path="/" component={Full} />
           </Switch>
         </MuiThemeProvider>
         {this.props.children}
@@ -54,12 +58,16 @@ class App extends Component {
 function mapStateToProps(state) {
   return { 
     token: state.auth.token,
+    checkAdmin: state.auth.checkAdmin,
   };
 }
 function mapDispathToProps(dispatch) {
   return {
     checkAuthFunction: () => {
       dispatch(checkAuthAction());
+    },
+    getCheckAdminFunction: () => {
+      dispatch(getCheckAdminAction());
     }
   };
 }

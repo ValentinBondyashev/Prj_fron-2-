@@ -3,7 +3,7 @@ let defaultState = {
     id: [],
     allSkills: [],
     userSkill: false,
-    userId: '',
+    userId: false,
     editSkill: false,
     mark: false,
     changedSkills: []
@@ -24,7 +24,6 @@ export function skill(state = defaultState, action) {
         case 'EDIT_USER_SKILL_ADMIN':
             return {...state, editSkill: action.payload.editSkill, mark:action.payload.mark };
         case 'GET_CHANGED_SKILLS':
-            console.log(JSON.parse(action.payload))
             return {...state, changedSkills: JSON.parse(action.payload)}
         default:
             return state;

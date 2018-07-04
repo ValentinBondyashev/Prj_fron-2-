@@ -3,7 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { Container, Nav, NavItem, NavLink, Badge, DropdownToggle, DropdownMenu } from 'reactstrap';
 import Dashboard from '../../containers/Dashboard/Dashboard';
 import { connect } from 'react-redux';
-import { getSkillsAction, editSkillsAction, createSkillsAction, getIdCategoriesAction } from '../../actions/skill'; 
+import { getSkillsAction, createSkillsAction, getIdCategoriesAction } from '../../actions/skill'; 
 import { getCheckAdminAction } from '../../actions/auth'; 
 
 import {
@@ -50,6 +50,9 @@ class MenuApp extends Component {
   }
   render() {
     const {photo, checkAdmin} = this.props;
+
+    console.log(checkAdmin)
+
     return (
       <div className="app">
         <AppHeader fixed>
@@ -94,15 +97,13 @@ class MenuApp extends Component {
                   },
                 )}
                 
-                { checkAdmin ? <Redirect from="/" to="/compare" /> : <Redirect from="/" to="/dashboard" />}
-                <Redirect from="/" to="/bubble" />
-                { checkAdmin ? <Redirect from="/" to="/compare" /> : null}
               </Switch>
             </Container>
           </main>
           <AppAside fixed hidden display="lg">
             {
-              this.props.changedSkills.map(e => `User${e.userId} :::: ${e.skill_old} ---> ${e.skill_new} ;`  )
+              checkAdmin ? this.props.changedSkills.map((e,i) => <p key={i}>{`User${e.userId} :::: ${e.skill_old} ---> ${e.skill_new} ;` }</p> ) :
+              this.props.changedSkills.filter(e => e.userId == localStorage.id).map((e,i) => <p key={i}>{`:::: ${e.skill_old} ---> ${e.skill_new} ;` }</p>)
             }
           </AppAside>
         </div>
@@ -131,9 +132,6 @@ function mapDispathToProps(dispatch) {
       getdCategoriesFunction: function () {
           dispatch(getIdCategoriesAction());
       },
-      editSkillFunction: function (skill) {
-          dispatch(editSkillsAction(skill));
-      }, 
       createSkillsAction: function (skill){
           dispatch(createSkillsAction(skill));
       },

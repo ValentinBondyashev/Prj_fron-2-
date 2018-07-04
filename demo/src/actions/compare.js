@@ -12,19 +12,18 @@ export const getAllSkillsAction = () => dispatch => {
   })
   .catch(function (error) {  
   });
-    
 }
 
 export const getSkillUserAction = (id) => dispatch => {
     axios.get(`http://localhost:3010/skills/${id}`)
     .then(function (response) {
-        dispatch({ type: 'SUCCES_GET_USER_SKILL', payload: {data :response.data, id: id} });
+      dispatch({ type: 'SUCCES_GET_USER_SKILL', payload: {data :response.data, id: id} });
     })
     .catch(function (error){ 
     });
 }
 
-export const editAdminSkillsAction = (userId, skillId, mark) => dispatch => {
+export const editSkillsAction = (userId, skillId, mark) => dispatch => {
   axios.put(`http://localhost:3010/skills`, {userId, skillId, mark},{
     headers: {
       'Content-Type': 'x-www-form-urlencoded',
@@ -35,7 +34,7 @@ export const editAdminSkillsAction = (userId, skillId, mark) => dispatch => {
       dispatch({ type: 'GET_CHANGED_SKILLS', payload:  event.data});
     });
     const editSkill = JSON.parse(response.config.data).skillTitle;
-    dispatch({ type: 'EDIT_USER_SKILL_ADMIN', payload: {editSkill, mark} });
+      dispatch({ type: 'EDIT_USER_SKILL_ADMIN', payload: {editSkill, mark} });
   })
   .catch(function (error) {
   });

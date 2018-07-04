@@ -57,14 +57,15 @@ class Login extends Component {
                         floatingLabelText="Login" 
                     />
                     <TextField 
+                        type="password"
                         value={this.state.password}  
                         onChange={this.handleChangePassword} 
                         floatingLabelText="Password"
                     /> 
                 </CardText>
-                <CardActions>
+                <CardActions style={{display: "flex", justifyContent: "space-between"}}>
                     <RaisedButton onClick={this.login} className="login-button" label="Login" primary={true} />
-                    <Button><Link className="link_login" to='/register'>Register</Link></Button>
+                    <RaisedButton primary={true} ><Link className="link_login" style={{ color: '#fff'}} to='/register'>Register</Link></RaisedButton>
                 </CardActions>
             </Card>
         </div>

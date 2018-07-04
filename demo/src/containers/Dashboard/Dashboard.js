@@ -11,8 +11,8 @@ import {Dropdown} from 'primereact/components/dropdown/Dropdown';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import { connect } from 'react-redux';
-import { getSkillsAction, editSkillsAction, createSkillsAction, getIdCategoriesAction, createSkillsAdminAction } from '../../actions/skill'; 
-import { editAdminSkillsAction } from '../../actions/compare'; 
+import { getSkillsAction, createSkillsAction, getIdCategoriesAction, createSkillsAdminAction } from '../../actions/skill'; 
+import { editSkillsAction } from '../../actions/compare'; 
 import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/omega/theme.css';
 import 'font-awesome/css/font-awesome.css';
@@ -90,13 +90,13 @@ class Dashboard extends  Component{
     }
 
     onRowUnselect(props, value, mark) {   
-        this.props.editAdminSkillsFunction(props.rowData.userId, props.rowData, mark)
+        this.props.editSkillsFunction(props.rowData.userId, props.rowData, mark)
     } 
     
     onEnter(props, value, key) {
         value.parentElement.parentElement.parentElement.style.background = "#A0DDA0";
         if(key === 13) {
-            this.props.editAdminSkillsFunction(props.rowData.userId,props.rowData.skillId, Number(props.rowData.mark)) 
+            this.props.editSkillsFunction(props.rowData.userId,props.rowData.skillId, Number(props.rowData.mark)) 
         }
     }
     save = () => {
@@ -164,9 +164,10 @@ class Dashboard extends  Component{
                                                 rowGroupFooterTemplate={this.footerTemplate}  
                                                 rowGroupHeaderTemplate={this.headerTemplate} 
                                                 globalFilter={this.state.globalFilter}
-                                                paginator={true} rows={10} header={header}>           
+                                                paginator={true} rows={10} header={header}
+                                               >           
                     <Column field="skill.title"  header="Технология"/>
-                    <Column field="mark" header="Скилл от 1 до 10 :" editor={this.editor}/>
+                    <Column field="mark" header="Скилл от 1 до 10 :" editor={this.editor} />
                     <Column field="disposition" header="Желание от 1 до 10 :" editor={this.editor}/>
                     <Column field="comment" header="Комментарий" editor={this.editor}/>
                 </DataTable>
@@ -237,15 +238,12 @@ class Dashboard extends  Component{
             },
             getIdCategoriesFunction: function () {
                 dispatch(getIdCategoriesAction());
-            },
-            editSkillFunction: function (skill) {
-                dispatch(editSkillsAction(skill));
             }, 
             createSkillsAction: function (skill){
                 dispatch(createSkillsAction(skill));
             },
-            editAdminSkillsFunction: function (userId,skillId,mark){
-                dispatch(editAdminSkillsAction(userId,skillId,mark));
+            editSkillsFunction: function (userId,skillId,mark){
+                dispatch(editSkillsAction(userId,skillId,mark));
             },
             createSkillsAdminFunction: function(skill, id){
                 dispatch(createSkillsAdminAction(skill, id));

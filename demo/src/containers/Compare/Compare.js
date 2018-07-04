@@ -24,14 +24,13 @@ class Compare extends Component {
     this.props.getSkillUserFunction(id);
   }
 
-  render() {  
-    
-    const {allSkills, userSkill} = this.props;
+  render() {    
+    const {allSkills, userSkill, userId} = this.props;
     return (
         <div className="general" >
             <UserTable allSkills={allSkills}/>   
             {userSkill ? <Dashboard userSkill={userSkill} />: null }
-            {userSkill ? <Bubble userSkill={userSkill}/> : null}  
+            {userSkill ? <Bubble userSkill={userSkill} userId={userId} /> : null}  
         </div>
     );
   }
@@ -40,7 +39,8 @@ class Compare extends Component {
 function mapStateToProps(state) {
     return { 
         allSkills: state.skill.allSkills,
-        userSkill: state.skill.userSkill
+        userSkill: state.skill.userSkill,
+        userId: state.skill.userId
     };
 }
 function mapDispathToProps(dispatch) {

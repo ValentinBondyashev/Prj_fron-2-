@@ -9,7 +9,7 @@ import {Dropdown} from 'primereact/components/dropdown/Dropdown';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import { connect } from 'react-redux';
-import { getSkillUserAction, editAdminSkillsAction } from '../../actions/compare';
+import { getSkillUserAction, editSkillsAction } from '../../actions/compare';
 import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/omega/theme.css';
 import 'font-awesome/css/font-awesome.css';
@@ -44,7 +44,6 @@ class Dashboard extends Component {
                         <Column field="name"  header="name"/>
                         <Column field="id"  header="id"/>
                         <Column field="created_at"  header="Data registration"/>
-
                     </DataTable>
                 </div>
           
@@ -65,8 +64,8 @@ function mapDispathToProps(dispatch) {
         getSkillUserFunction: function (id) {
             dispatch(getSkillUserAction(id));
         },
-        editAdminSkillsFunction: function (id,skill) {
-            dispatch(editAdminSkillsAction(id,skill));
+        editSkillsFunction: function (id,skill) {
+            dispatch(editSkillsAction(id,skill));
         },
         
     };

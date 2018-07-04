@@ -32,7 +32,6 @@ export const getSkillsAction = (id) => dispatch => {
 }
 
 export const getIdCategoriesAction = () => dispatch => {
-  
   axios.get('http://localhost:3010/skills/categories', {})
   .then(function (response) {
     dispatch({ type: 'GET_ID_SKILLS', payload: response.data });
@@ -52,15 +51,14 @@ export const createSkillsAdminAction = (skill, id) => dispatch => {
   })
   .catch(function (error) {
   });
-
 }
+
 export const editSkillsAction = (userID, skillID, mark) => dispatch => {
   axios.put('http://localhost:3010/skills', {userID, skillID, mark})
   .then(function (response) {
   })
   .catch(function (error) {
   });
-
 }
 
 export const createSkillsAction = (skill) => dispatch => {
@@ -74,5 +72,4 @@ export const createSkillsAction = (skill) => dispatch => {
   })
   .catch(function (error) {
   });
-
 }

@@ -21,6 +21,7 @@ export const loginAction = (email, password) => dispatch => {
   .then(function (response) {
     localStorage.setItem('token', response.data);
     localStorage.setItem('id', jwt_decode(response.data).id);
+    
     dispatch({ type: 'LOGIN_SUCCESS', payload: {token: response.data, MyID: jwt_decode(response.data).id }});
   })
   .catch(function (error) {  

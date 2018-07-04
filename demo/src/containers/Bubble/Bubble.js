@@ -51,8 +51,27 @@ class Bubble extends Component {
     } 
   }
 
+  sortChangedData(data){
+    if(this.props.userId){
+      var arr = data.filter(e => e.userId == this.props.userId).sort( (a,b) => {
+        return new Date(a.createdAt) - new Date(b.createdAt)
+      })
+    }else{
+      var arr = data.sort( (a,b) => {
+        return new Date(a.createdAt) - new Date(b.createdAt)
+      })
+    }
+    let uniqskills = {};
+    arr.forEach(skill => {
+      if(!uniqskills.hasOwnProperty(skill.skillId)){
+        uniqskills[skill['userSkill.skillId']] = {skillId: skill['userSkill.skillId'], mark: skill.skill_old - skill.skill_new};
+      }
+    });
+    return uniqskills;
+  }
 
   sort = (data) => {
+    let arrUniqslist = this.sortChangedData(this.props.changedSkills);
     let other = {}, letter; 
     let obj = {
       "name": "nivo",
@@ -66,38 +85,32 @@ class Bubble extends Component {
     })
     var num = -1;
     for(let key in other) {  
-      obj.children.push({
-        "name": key,
-        "color": "hsl(235, 89%, 64%)",
-        "children": []})
-        num++;
-      for(var secondKey in other[key]){
-        /*
-        for(var i = 0; i < this.props.changedSkills.length; i++){
-          console.log('---------', other[key][secondKey].skill.id , this.props.changedSkills[i]['userSkill.skillId'])
-          if(other[key][secondKey].skill.id == this.props.changedSkills[i]['userSkill.skillId']){
-            obj.children[num].children.push(
-              {"name" :other[key][secondKey].skill.title,  "color": "hsl(129, 88%, 51%)", "loc" : other[key][secondKey].mark }
-            )
-          }
-        }
-        */
-        if(other[key][secondKey].skill.id === this.props.changedSkills[0]['userSkill.skillId']){
-          if(other[key][secondKey].mark > this.props.changedSkills[0]['skill_new']){
-            obj.children[num].children.push(
-              {"name" :other[key][secondKey].skill.title,  "color": "hsl(129, 88%, 51%)", "loc" : other[key][secondKey].mark }
-            )
-          }else{
-            obj.children[num].children.push(
-              {"name" :other[key][secondKey].skill.title,  "color": "hsl(249, 100%, 59%)", "loc" : other[key][secondKey].mark }
-            )
-          }
-          }
-        else{
-            obj.children[num].children.push(
-              {"name" :other[key][secondKey].skill.title,  "color": "hsl(0, 0%, 89%)", "loc" : other[key][secondKey].mark }
+      if(other[key][0].skill.title){
+        obj.children.push({
+          "name": other[key][0].skill.skillsCategory.description,
+          "color": "hsl(235, 89%, 64%)",
+          "children": []})
+          num++;
+        
+        for(var secondKey in other[key]){
+          let skillId = other[key][secondKey];
+         if(arrUniqslist.hasOwnProperty(skillId.skill.id)){
+              if(arrUniqslist[skillId.skill.id].mark < 0){
+                obj.children[num].children.push(
+                  {"name" :skillId.skill.title,  "color": "hsl(129, 88%, 51%)", "loc" : skillId.mark }
+                )
+              }else{
+                obj.children[num].children.push(
+                  {"name" :skillId.skill.title,  "color": "hsl(249, 100%, 59%)", "loc" : skillId.mark }
+                )
+              }
+            }else{ obj.children[num].children.push(
+              {"name" :skillId.skill.title,  "color": "hsl(0, 0%, 89%)", "loc" : skillId.mark }
           )}
-        }            
+         }  
+      }
+
+               
       }
       return obj
   }
@@ -105,14 +118,13 @@ class Bubble extends Component {
   render(){
     let ar;
     const { SkipRadius } = this.state;
-    console.log(this.props.userSkill)
       return (
           <div style={{padding: '0', height: '1000px'}}>   
             <div style={{margin: "20px"}}>
               <input onChange={this.changeSkipRadius.bind(this)} type="range" min="16" max="56" step="3" value={SkipRadius}/> 
             </div>
           <ResponsiveBubble
-            root={ this.props.skills ? this.data(this.props.skills) : fData }
+            root={ this.props.skills ? this.data() : fData }
             margin={{
               "top": 20,
               "right": 20,

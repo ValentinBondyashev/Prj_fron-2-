@@ -70,9 +70,9 @@ class Register extends Component {
                         floatingLabelText="Password"
                     />  
                 </CardText>
-                <CardActions>
+                <CardActions style={{display: "flex", justifyContent: "space-between"}}>
                     <RaisedButton onClick={this.register} className="register-button" label="Register" primary={true} />
-                    <Button><Link className="link_login" to='/'>Sign in</Link></Button>
+                    <RaisedButton primary={true} ><Link className="link_login" style={{ color: '#fff'}} to='/'>Sign in</Link></RaisedButton>
                 </CardActions>
             </Card>
         </div>

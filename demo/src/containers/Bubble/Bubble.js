@@ -84,28 +84,28 @@ class Bubble extends Component {
       other[letter].push(element);
     })
     var num = -1;
-    for(let key in other) {  
-      if(other[key][0].skill.title){
+    for(let key in other) { 
+      let skillCategory = other[key];
+      if(skillCategory[0].skill.title){
         obj.children.push({
-          "name": other[key][0].skill.skillsCategory.description,
+          "name": skillCategory[0].skill.skillsCategory.description,
           "color": "hsl(235, 89%, 64%)",
           "children": []})
           num++;
-        
-        for(var secondKey in other[key]){
-          let skillId = other[key][secondKey];
-         if(arrUniqslist.hasOwnProperty(skillId.skill.id)){
-              if(arrUniqslist[skillId.skill.id].mark < 0){
+        for(var secondKey in skillCategory){
+          let skill = skillCategory[secondKey];
+         if(arrUniqslist.hasOwnProperty(skill.skill.id)){
+              if(arrUniqslist[skill.skill.id].mark < 0){
                 obj.children[num].children.push(
-                  {"name" :skillId.skill.title,  "color": "hsl(129, 88%, 51%)", "loc" : skillId.mark }
+                  {"name" :skill.skill.title,  "color": "hsl(113, 67%, 55%)", "loc" : skill.mark }
                 )
               }else{
                 obj.children[num].children.push(
-                  {"name" :skillId.skill.title,  "color": "hsl(249, 100%, 59%)", "loc" : skillId.mark }
+                  {"name" :skill.skill.title,  "color": "hsl(228, 76%, 41%)", "loc" : skill.mark }
                 )
               }
             }else{ obj.children[num].children.push(
-              {"name" :skillId.skill.title,  "color": "hsl(0, 0%, 89%)", "loc" : skillId.mark }
+              {"name" :skill.skill.title,  "color": "hsl(0, 0%, 89%)", "loc" : skill.mark }
           )}
          }  
       }

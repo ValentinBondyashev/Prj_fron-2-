@@ -17,17 +17,17 @@ class Register extends Component {
     };
   }
 
-  componentWillReceiveProps = (nextProps) => {
-    if(nextProps.status === 'success'){
-        this.props.history.push("/full");
+    componentWillReceiveProps = (nextProps) => {
+        if(nextProps.status === 'success'){
+            this.props.history.push("/full");
+        }
     }
-  }
 
-  register = () => {
-    this.props.registerFunction(this.state.email, this.state.password, this.state.name);
-  }
+    register = () => {
+        this.props.registerFunction(this.state.email, this.state.password, this.state.name);
+    }
 
-  onEnter(value, key) {
+    onEnter(value, key) {
     if(key === 13) {
         this.register();
         }
@@ -37,13 +37,13 @@ class Register extends Component {
         this.setState({ name: e.target.value });
     }
 
-  handleChangeEmail = (e) => {
-    this.setState({ email: e.target.value });
-  }
+    handleChangeEmail = (e) => {
+        this.setState({ email: e.target.value });
+    }
 
-  handleChangePassword = (e) =>{
-    this.setState({ password: e.target.value });
-  }
+    handleChangePassword = (e) =>{
+        this.setState({ password: e.target.value });
+    }
 
   render() {
     return (

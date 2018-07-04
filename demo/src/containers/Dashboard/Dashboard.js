@@ -39,8 +39,6 @@ class Dashboard extends  Component{
     componentWillMount() {
         this.props.getSkillsFunction(this.props.MyID); 
         this.props.getIdCategoriesFunction();
-        
-
     }
     
     onEditorValueChange(props, value) {

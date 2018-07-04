@@ -3,7 +3,7 @@ export default {
     {
       name: 'Dashboard',
       url: '/dashboard',
-      icon: 'cui-speedometer icons',
+      icon: 'fa fa-columns',
       badge: {
         variant: 'info',
       }
@@ -11,7 +11,7 @@ export default {
     {
       name: 'Bubble',
       url: '/bubble',
-      icon: 'cui-speedometer icons',
+      icon: 'fa fa-bullseye',
       badge: {
         variant: 'info',
       }

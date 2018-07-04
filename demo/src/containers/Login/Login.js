@@ -43,6 +43,10 @@ class Login extends Component {
   }
   
   render() {
+    const hideAutoFillColorStyle = {
+        WebkitBoxShadow: '0 0 0 1000px white inset',
+        WebkitAutofill: "off" 
+      };
     return (
         <div className="general" style={{display: "flex", justifyContent: "center", alignItems: "center",height: "100vh"}}>        
             <Card className="container" style={{display: "flex",
@@ -55,12 +59,15 @@ class Login extends Component {
                         value={this.state.email}  
                         onChange={this.handleChangeEmail} 
                         floatingLabelText="Login" 
+                        inputStyle={hideAutoFillColorStyle}
                     />
                     <TextField 
                         type="password"
                         value={this.state.password}  
                         onChange={this.handleChangePassword} 
                         floatingLabelText="Password"
+                        inputStyle={hideAutoFillColorStyle}
+                        autoComplete="off"
                     /> 
                 </CardText>
                 <CardActions style={{display: "flex", justifyContent: "space-between"}}>

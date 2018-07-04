@@ -51,8 +51,6 @@ class MenuApp extends Component {
   render() {
     const {photo, checkAdmin} = this.props;
 
-    console.log(checkAdmin)
-
     return (
       <div className="app">
         <AppHeader fixed>

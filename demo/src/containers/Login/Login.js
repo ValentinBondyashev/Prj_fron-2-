@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { loginAction } from '../../actions/auth'; 
 import {Password} from 'primereact/components/password/Password';
 import { Link } from 'react-router-dom';
+import './Login.css';
 
 class Login extends Component {
   constructor(props) {
@@ -72,7 +73,7 @@ class Login extends Component {
                 </CardText>
                 <CardActions style={{display: "flex", justifyContent: "space-between"}}>
                     <RaisedButton onClick={this.login} className="login-button" label="Login" primary={true} />
-                    <RaisedButton primary={true} ><Link className="link_login" style={{ color: '#fff'}} to='/register'>Register</Link></RaisedButton>
+                    <Link className="link_login" style={{ color: '#fff', backgroundColor: "rgb(0, 188, 212)",}} to='/register'>Register</Link>
                 </CardActions>
             </Card>
         </div>

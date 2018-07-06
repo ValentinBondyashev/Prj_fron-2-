@@ -5,6 +5,7 @@ import Dashboard from '../../containers/Dashboard/Dashboard';
 import { connect } from 'react-redux';
 import { getSkillsAction, createSkillsAction, getIdCategoriesAction } from '../../actions/skill'; 
 import { getCheckAdminAction } from '../../actions/auth'; 
+import UserInfo from '../UserInfo/UserInfo';
 
 import {
   AppAside,
@@ -59,19 +60,19 @@ class MenuApp extends Component {
             full={{ src: logo, width: 35, height: 30, alt: 'Roadmaps' }}
             minimized={{ src: sygnet, width: 30, height: 30, alt: 'CoreUI Logo' }}
           />
-          <AppSidebarToggler className="d-md-down-none" display="lg" />
+          <AppSidebarToggler style={{outline: 'none'}} className="d-md-down-none" display="lg" />
           <Nav className="ml-auto" navbar>
             <AppHeaderDropdown>
               <DropdownToggle nav>
                 <img src={photo ? photo : 'https://lh3.googleusercontent.com/-gXrDT7eEAoI/AAAAAAAAAAI/AAAAAAAAAAA/ylTkWjUFffI/photo.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
               </DropdownToggle>
-              <DropdownMenu right style={{ right: 'auto', height: '400px' }}>
-                AppHeaderDropdown
+              <DropdownMenu right style={{ right: 'auto', padding: '5px' }}>
+                <UserInfo/>
               </DropdownMenu>
             </AppHeaderDropdown>
           </Nav>
-          <AppAsideToggler className="d-md-down-none" />
-          <AppAsideToggler className="d-lg-none" mobile />
+          <AppAsideToggler className="d-md-down-none" style={{outline: 'none'}} />
+          <AppAsideToggler className="d-lg-none" mobile style={{outline: 'none'}} />
         </AppHeader>
         <div className="app-body">
           <AppSidebar fixed display="lg">
@@ -93,12 +94,11 @@ class MenuApp extends Component {
                       )} />)
                       : (null);
                   },
-                )}
-                
+                )}                
               </Switch>
             </Container>
           </main>
-          <AppAside fixed hidden display="lg">
+          <AppAside fixed hidden display="lg" style={{padding : '20px'}}>
             {
               checkAdmin ? this.props.changedSkills.map((e,i) => <p key={i}>{`User${e.userId} :::: ${e.skill_old} ---> ${e.skill_new} ;` }</p> ) :
               this.props.changedSkills.filter(e => e.userId == localStorage.id).map((e,i) => <p key={i}>{`:::: ${e.skill_old} ---> ${e.skill_new} ;` }</p>)

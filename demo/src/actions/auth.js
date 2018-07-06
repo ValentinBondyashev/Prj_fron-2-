@@ -1,5 +1,4 @@
 import axios from 'axios';
-import firebase from 'firebase';
 import jwt_decode from 'jwt-decode';
 
 const header = {Authorization: "Bearer " + localStorage.token};
@@ -13,7 +12,6 @@ export const getCheckAdminAction = () => dispatch => {
   })
   .catch(function (error) {  
   });
-    
 }
 
 export const loginAction = (email, password) => dispatch => {
@@ -21,7 +19,6 @@ export const loginAction = (email, password) => dispatch => {
   .then(function (response) {
     localStorage.setItem('token', response.data);
     localStorage.setItem('id', jwt_decode(response.data).id);
-    
     dispatch({ type: 'LOGIN_SUCCESS', payload: {token: response.data, MyID: jwt_decode(response.data).id }});
   })
   .catch(function (error) {  

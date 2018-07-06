@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import './Dashboard.scss';
 import {DataTable} from 'primereact/components/datatable/DataTable';
 import {Dialog} from 'primereact/components/dialog/Dialog';
 import {Button} from 'primereact/components/button/Button';
@@ -27,7 +26,8 @@ class Dashboard extends  Component{
             skill: {skillTitle:'', mark: '', disposition: '', comment: ''},
             displayDialog: false,
             idSkill : 1,
-            oldValue: ''
+            oldValue: '',
+            brands: null
         };
         this.editor = this.editor.bind(this);
         this.headerTemplate = this.headerTemplate.bind(this);
@@ -88,7 +88,7 @@ class Dashboard extends  Component{
     }
 
     onRowUnselect(props, value, mark) {   
-        this.props.editSkillsFunction(props.rowData.userId, props.rowData, mark)
+        this.props.editSkillsFunction(props.rowData.userId,props.rowData.skillId, Number(props.rowData.mark)) 
     } 
     
     onEnter(props, value, key) {
@@ -136,11 +136,8 @@ class Dashboard extends  Component{
         this.setState({idSkill:value})
     }
 
-   
-
     render() {
         const { userSkill, skills, id } = this.props
-
         let header = <div style={{'textAlign':'left'}}>
                         <i className="fa fa-search" style={{margin:'4px 4px 0 0'}}></i>
                         <InputText type="search" onInput={(e) => this.setState({globalFilter: e.target.value})} placeholder="Global Search" size="50"/>
@@ -153,10 +150,11 @@ class Dashboard extends  Component{
         let dialogFooter =  <div className="ui-dialog-buttonpane ui-helper-clearfix">
                                 <Button label="Save" icon="fa fa-check" onClick={this.save}/>
                             </div>;
+
         return (
             <div>
                 <div className="content-section implementation" style={{padding: '0', minHeight: '100px'}}>
-                <DataTable header="Технологии"  value={userSkill ? userSkill : skills} 
+                <DataTable  header="Технологии"  value={userSkill ? userSkill : skills} 
                                                 rowGroupMode="subheader"  footer={footer} 
                                                 groupField="skill.skillsCategory.description" 
                                                 rowGroupFooterTemplate={this.footerTemplate}  
@@ -164,12 +162,11 @@ class Dashboard extends  Component{
                                                 globalFilter={this.state.globalFilter}
                                                 paginator={true} rows={10} header={header}
                                                >           
-                    <Column field="skill.title"  header="Технология"/>
+                    <Column field="skill.title"  header="Технология"  />
                     <Column field="mark" header="Скилл от 1 до 10 :" editor={this.editor} />
                     <Column field="disposition" header="Желание от 1 до 10 :" editor={this.editor}/>
                     <Column field="comment" header="Комментарий" editor={this.editor}/>
-                </DataTable>
-                
+                </DataTable>               
                 <Dialog visible={this.state.displayDialog} 
                         header="Add Skill" modal={true} 
                         footer={dialogFooter} onHide={() => this.setState({displayDialog: false})}>
@@ -191,14 +188,14 @@ class Dashboard extends  Component{
                             </div>
                         </div>
                         <div className="ui-grid-row">
-                            <div className="ui-grid-col-4" style={{padding:'4px 10px'}}><label htmlFor="mark">Скилл</label></div>
+                            <div className="ui-grid-col-4" style={{padding:'30px 10px'}}><label htmlFor="mark">Скилл</label></div>
                             <div className="ui-grid-col-8" style={{padding:'4px 10px'}}>
-                                <span>От 0 до 10:</span>
+                                <span >От 0 до 10:</span>
                                 <InputText id="mark" onChange={(e) => {this.updatePropertyMark('mark', e.target.value)}} value={this.state.skill.mark}/>
                             </div>
                         </div>
                         <div className="ui-grid-row">
-                            <div className="ui-grid-col-4" style={{padding:'4px 10px'}}><label htmlFor="disposition">Желание</label></div>
+                            <div className="ui-grid-col-4" style={{padding:'25px 10px'}}><label htmlFor="disposition">Желание</label></div>
                             <div className="ui-grid-col-8" style={{padding:'4px 10px'}}>
                                 <span>От 0 до 10:</span>
                                 <InputText id="disposition" onChange={(e) => {this.updatePropertyMark('disposition', e.target.value)}} value={this.state.skill.disposition}/>
@@ -245,7 +242,7 @@ class Dashboard extends  Component{
             },
             createSkillsAdminFunction: function(skill, id){
                 dispatch(createSkillsAdminAction(skill, id));
-            }      
+            }     
         };
     }
 

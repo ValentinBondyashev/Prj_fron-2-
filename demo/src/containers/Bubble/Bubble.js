@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { getSkillsAction } from '../../actions/skill'
 import { linearGradientDef } from '@nivo/core'
 
-
 const fData = {
   "name": "nivo",
   "color": "hsl(12, 70%, 50%)",
@@ -24,11 +23,9 @@ class Bubble extends Component {
     this.state = { 
       SkipRadius: 20,
       clickId : null,
-    };
-    
+    }; 
   }
  
-
   data = () =>{
     if(this.props.userSkill ){
       return this.sort(this.props.userSkill) ;
@@ -37,7 +34,6 @@ class Bubble extends Component {
     }
   }
   
-
   changeSkipRadius = (e) => {
     this.setState({SkipRadius: e.target.value})  
   }
@@ -62,10 +58,10 @@ class Bubble extends Component {
       })
     }
     let uniqskills = {};
-    arr.forEach(skill => {
-      if(!uniqskills.hasOwnProperty(skill.skillId)){
-        uniqskills[skill['userSkill.skillId']] = {skillId: skill['userSkill.skillId'], mark: skill.skill_old - skill.skill_new};
-      }
+      arr.forEach(skill => {
+        if(!uniqskills.hasOwnProperty(skill.skillId)){
+          uniqskills[skill['userSkill.skillId']] = {skillId: skill['userSkill.skillId'], mark: skill.skill_old - skill.skill_new};
+        }
     });
     return uniqskills;
   }
@@ -78,6 +74,7 @@ class Bubble extends Component {
       "color": "hsl(263, 67%, 31%)",
       "children": []}
     data.map(element => {
+      if(element.skill != null)
       letter = element.skill.categoryId;
       if (!(letter in other))
           other[letter] = [];     
@@ -94,6 +91,7 @@ class Bubble extends Component {
           num++;
         for(var secondKey in skillCategory){
           let skill = skillCategory[secondKey];
+          if(skill.skill != null)
          if(arrUniqslist.hasOwnProperty(skill.skill.id)){
               if(arrUniqslist[skill.skill.id].mark < 0){
                 obj.children[num].children.push(
@@ -121,7 +119,24 @@ class Bubble extends Component {
       return (
           <div style={{padding: '0', height: '1000px'}}>   
             <div style={{margin: "20px"}}>
-              <input onChange={this.changeSkipRadius.bind(this)} type="range" min="16" max="56" step="3" value={SkipRadius}/> 
+            <input type="range" list="tickmarks" min="13" max="53" onChange={this.changeSkipRadius.bind(this)} />
+            <datalist id="tickmarks">
+              <option value="13"/>
+              <option value="16"/>
+              <option value="19"/>
+              <option value="21"/>
+              <option value="24"/>
+              <option value="27"/>
+              <option value="30"/>
+              <option value="33"/>
+              <option value="36"/>
+              <option value="39"/>
+              <option value="41"/>
+              <option value="44"/>
+              <option value="47"/>
+              <option value="50"/>
+              <option value="53"/>
+            </datalist>
             </div>
           <ResponsiveBubble
             root={ this.props.skills ? this.data() : fData }

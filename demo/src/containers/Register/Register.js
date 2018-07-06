@@ -6,6 +6,7 @@ import { Button } from 'primereact/components/button/Button';
 import { registerAction } from '../../actions/register'; 
 import { connect } from 'react-redux'; 
 import { Link } from 'react-router-dom';
+import './Register.css'
 
 class Register extends Component {
   constructor(props) {
@@ -72,7 +73,7 @@ class Register extends Component {
                 </CardText>
                 <CardActions style={{display: "flex", justifyContent: "space-between"}}>
                     <RaisedButton onClick={this.register} className="register-button" label="Register" primary={true} />
-                    <RaisedButton primary={true} ><Link className="link_login" style={{ color: '#fff'}} to='/'>Sign in</Link></RaisedButton>
+                    <Link className="link_login" style={{ color: '#fff'}} to='/'>Sign in</Link>
                 </CardActions>
             </Card>
         </div>

@@ -19,8 +19,6 @@ axios.interceptors.response.use(
   } 
 );
 
-
-
 export const getSkillsAction = (id) => dispatch => {
   axios.get(`http://localhost:3010/skills/${localStorage.id}`, {})
   .then(function (response) {
@@ -28,18 +26,15 @@ export const getSkillsAction = (id) => dispatch => {
   })
   .catch(function (error) {  
   });
-    
 }
 
 export const getIdCategoriesAction = () => dispatch => {
-  
   axios.get('http://localhost:3010/skills/categories', {})
   .then(function (response) {
     dispatch({ type: 'GET_ID_SKILLS', payload: response.data });
   })
   .catch(function (error) {  
   });
-
 }
 
 export const createSkillsAdminAction = (skill, id) => dispatch => {
@@ -52,19 +47,17 @@ export const createSkillsAdminAction = (skill, id) => dispatch => {
   })
   .catch(function (error) {
   });
-
 }
+
 export const editSkillsAction = (userID, skillID, mark) => dispatch => {
   axios.put('http://localhost:3010/skills', {userID, skillID, mark})
   .then(function (response) {
   })
   .catch(function (error) {
   });
-
 }
 
 export const createSkillsAction = (skill) => dispatch => {
-
   axios.post('http://localhost:3010/skills', skill)
   .then(function (response) {
     axios.get(`http://localhost:3010/skills${localStorage.id}`, {})
@@ -74,5 +67,4 @@ export const createSkillsAction = (skill) => dispatch => {
   })
   .catch(function (error) {
   });
-
 }

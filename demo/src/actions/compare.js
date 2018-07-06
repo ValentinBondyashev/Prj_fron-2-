@@ -1,8 +1,8 @@
 import axios from 'axios';
 const ws = new WebSocket('ws://localhost:8800');    
 
-ws.onopen = ((event) => {
-});
+ws.onopen = function() {
+};
 
 
 export const getAllSkillsAction = () => dispatch => {
@@ -38,7 +38,4 @@ export const editSkillsAction = (userId, skillId, mark) => dispatch => {
   })
   .catch(function (error) {
   });
-
 }
-
-

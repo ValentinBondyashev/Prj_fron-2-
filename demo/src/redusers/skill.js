@@ -21,7 +21,7 @@ export function skill(state = defaultState, action) {
             return {...state };
         case 'GET_ID_SKILLS':
             return {...state, listTechnologies: action.payload};
-        case 'EDIT_USER_SKILL_ADMIN':
+        case 'EDIT_USER_SKILL':
             return {...state, editSkill: action.payload.editSkill, mark:action.payload.mark };
         case 'GET_CHANGED_SKILLS':
             return {...state, changedSkills: JSON.parse(action.payload)}

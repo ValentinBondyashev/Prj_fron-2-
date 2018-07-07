@@ -31,7 +31,7 @@ export const editSkillsAction = (userId, skillId, mark) => dispatch => {
     }})
   .then(function (response){
     const editSkill = JSON.parse(response.config.data).skillTitle;
-      dispatch({ type: 'EDIT_USER_SKILL_ADMIN', payload: {editSkill, mark} });
+      dispatch({ type: 'EDIT_USER_SKILL', payload: {editSkill, mark} });
   })
   .then(function (response){
     ws.onmessage = ((event) => {

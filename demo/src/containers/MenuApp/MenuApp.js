@@ -113,10 +113,7 @@ class MenuApp extends Component {
 }
 
 function mapStateToProps(state) {
-  return { 
-      skills: state.skill.skills.data,
-      skillsAll: state.skill.allSkills.data,
-      id: state.skill.id.data,     
+  return {    
       checkAdmin: state.auth.checkAdmin,
       photo: state.auth.photo,
       changedSkills: state.skill.changedSkills

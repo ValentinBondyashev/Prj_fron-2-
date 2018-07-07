@@ -3,7 +3,7 @@ let defaultState = {
     status: '',
     checkAdmin: false,
     photo: '',
-    MyID: null
+    MyID: null 
 };
 
 export function auth(state = defaultState, action) {

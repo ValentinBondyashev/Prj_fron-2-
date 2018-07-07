@@ -137,7 +137,7 @@ class Dashboard extends  Component{
     }
 
     render() {
-        const { userSkill, skills, id } = this.props
+        const { userSkill, skills, listTechnologies } = this.props
         let header = <div style={{'textAlign':'left'}}>
                         <i className="fa fa-search" style={{margin:'4px 4px 0 0'}}></i>
                         <InputText type="search" onInput={(e) => this.setState({globalFilter: e.target.value})} placeholder="Global Search" size="50"/>
@@ -175,7 +175,7 @@ class Dashboard extends  Component{
                             <div className="ui-grid-col-4" style={{padding:'4px 10px'}}><label htmlFor="skillTitle">Технология</label></div>
                             <div className="ui-grid-col-8" style={{padding:'4px 10px'}}>
                             <DropDownMenu value={this.state.idSkill} onChange={this.handleChange}>{
-                                id ? id.map((el,index) => (
+                                listTechnologies ? listTechnologies.map((el,index) => (
                                     <MenuItem key={index} value={el.id} primaryText={el.title} />
                                 )): null }
                             </DropDownMenu>
@@ -220,7 +220,7 @@ class Dashboard extends  Component{
     function mapStateToProps(state) {
         return { 
             skills: state.skill.skills,
-            id: state.skill.id,
+            listTechnologies: state.skill.listTechnologies,
             checkAdmin: state.auth.checkAdmin,
             MyID: state.auth.MyID,
             userId: state.skill.userId

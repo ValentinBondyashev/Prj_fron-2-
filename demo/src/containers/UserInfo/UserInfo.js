@@ -48,8 +48,8 @@ class UserInfo extends Component {
                         <i className="fa fa-caret-down" style={{color:'red'}}></i>
                     } 
                 </li>
-                <li>Laravel</li>
-                <li>Canvas</li>
+                <li>CSS</li>
+                <li>HTML</li>
             </ul>
           </div>             
       )

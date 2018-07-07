@@ -30,11 +30,13 @@ export const editSkillsAction = (userId, skillId, mark) => dispatch => {
       'Authorization': "Bearer " + localStorage.token
     }})
   .then(function (response){
+    const editSkill = JSON.parse(response.config.data).skillTitle;
+      dispatch({ type: 'EDIT_USER_SKILL_ADMIN', payload: {editSkill, mark} });
+  })
+  .then(function (response){
     ws.onmessage = ((event) => {
       dispatch({ type: 'GET_CHANGED_SKILLS', payload:  event.data});
     });
-    const editSkill = JSON.parse(response.config.data).skillTitle;
-      dispatch({ type: 'EDIT_USER_SKILL_ADMIN', payload: {editSkill, mark} });
   })
   .catch(function (error) {
   });

@@ -6,7 +6,7 @@ import { Button } from 'primereact/components/button/Button';
 import { registerAction } from '../../actions/register'; 
 import { connect } from 'react-redux'; 
 import { Link } from 'react-router-dom';
-import './Register.css'
+import './Register.css';
 
 class Register extends Component {
   constructor(props) {

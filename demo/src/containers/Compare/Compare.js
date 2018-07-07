@@ -9,7 +9,6 @@ import UserTable from '../../containers/UsersTable/UserTable';
 
 class Compare extends Component {
   constructor(props) {
-
     super(props);
     this.state = { 
     };
@@ -25,10 +24,10 @@ class Compare extends Component {
   }
 
   render() {  
-    const {allSkills, userSkill, userId} = this.props;
+    const {listUsers, userSkill, userId} = this.props;
     return (
         <div className="general" >
-            <UserTable allSkills={allSkills}/>   
+            <UserTable listUsers={listUsers}/>   
             {userSkill ? <Dashboard userSkill={userSkill} />: null }
             {userSkill ? <Bubble userSkill={userSkill} userId={userId} /> : null}  
         </div>
@@ -38,7 +37,7 @@ class Compare extends Component {
 
 function mapStateToProps(state) {
     return { 
-        allSkills: state.skill.allSkills,
+        listUsers: state.skill.listUsers,
         userSkill: state.skill.userSkill,
         userId: state.skill.userId
     };

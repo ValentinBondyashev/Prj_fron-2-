@@ -19,7 +19,7 @@ class Dashboard extends Component {
     constructor() {
         super();
         this.state = {
-            allSkills: ''
+            listUsers: ''
         };
     }
     displaySelection(data) {
@@ -30,16 +30,15 @@ class Dashboard extends Component {
             this.props.getSkillUserFunction(data.id)
             return <div style={{textAlign: 'left'}}>Selected User: {data.uid + ' - ' + data.email }</div>
         }
-        
     }
     
     render() {
         return (
             <div>
                 <div className="content-section implementation">
-                    <DataTable value={this.props.allSkills} selectionMode="single" header="All Users" 
-                        footer={this.displaySelection(this.state.allSkills)}
-                        selection={this.state.allSkills} onSelectionChange={(e) => this.setState({allSkills: e.data})}>
+                    <DataTable value={this.props.listUsers} selectionMode="single" header="All Users" 
+                        footer={this.displaySelection(this.state.listUsers)}
+                        selection={this.state.listUsers} onSelectionChange={(e) => this.setState({listUsers: e.data})}>
                         <Column field="email"  header="email"/>
                         <Column field="name"  header="name"/>
                         <Column field="id"  header="id"/>
@@ -56,7 +55,6 @@ class Dashboard extends Component {
 function mapStateToProps(state) {
     return { 
         skills: state.skill.skills.data,
-        id: state.skill.id.data
     };
 }
 function mapDispathToProps(dispatch) {

@@ -14,19 +14,14 @@ export class AutoCompleteUser extends Component {
 
   componentDidMount() {
     this.users = this.props.users
-
-    console.log('mount', this.users)   
   }
 
   componentDidUpdate() {
     this.users = this.props.users
-
-    console.log('update', this.users)   
   }
 
   filterUsers = (event) => {
     setTimeout(() => {
-        console.log('event', this.users)
         var result = this.users.filter((user) => {
           if(user.name.toLowerCase().includes(event.query.toLowerCase())){
             return user
@@ -37,7 +32,6 @@ export class AutoCompleteUser extends Component {
   }
 
   render() {
-    console.log('render', this.state.filteredUser);
     return (
       <div className='autocomplete-user'>
         <h3>Developer</h3>

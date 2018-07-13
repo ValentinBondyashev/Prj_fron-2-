@@ -18,7 +18,12 @@ export class AutoCompleteSkillFilter extends Component {
       } else {
         return
       }
-      
+    })
+  }
+
+  clearFilter = () => {
+    this.setState({
+      skills: null
     })
   }
 
@@ -53,6 +58,7 @@ export class AutoCompleteSkillFilter extends Component {
             this.props.changeStateFilter(e.value)
           }} />
         </span>
+        <button onClick={this.clearFilter}>Clear filters</button>
       </div>
     )
   }

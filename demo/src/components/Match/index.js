@@ -5,7 +5,6 @@ import { AutoCompleteSkillFilter } from './containers/AutoCompleteSkillFilter';
 import { AutoCompleteUser } from './containers/AutocopleteUser';
 import { getAllSkillsAction } from '../../actions/compare';
 
-
 import './compare.css';
 
 import 'primereact/resources/themes/omega/theme.css';
@@ -45,13 +44,11 @@ class App extends React.Component{
 
   componentWillMount() {
     this.props.getUsersFunction();
-
   }
 
   render() {
-    const { skills } = this.props
-    const { listUsers } = this.props
-    console.log('index', listUsers)
+    const { skills, listUsers } = this.props
+    
     return(
       <div className='compare-desk'>
         <AutoCompleteUser users={listUsers} changeStateUser={this.changeStateUser}/>

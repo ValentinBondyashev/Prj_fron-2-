@@ -15,6 +15,14 @@ export default {
         badge: {
           variant: 'info',
         }
+      },
+      {
+        name: 'Match',
+        url: '/match',
+        icon: 'fa fa-handshake-o',
+        badge: {
+          variant: 'info',
+        }
       }
     ]
   };

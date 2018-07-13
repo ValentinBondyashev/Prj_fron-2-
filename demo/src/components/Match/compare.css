@@ -1,0 +1,13 @@
+.compare-desk{
+  width: 500px;
+  height: 500px;
+  margin: 10px;
+}
+
+.results{
+  display: flex;
+  justify-content: space-around;
+  margin: 5px;
+  border: 1px solid black;
+}
+

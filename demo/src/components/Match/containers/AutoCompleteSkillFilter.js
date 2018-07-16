@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {AutoComplete} from 'primereact/components/autocomplete/AutoComplete';
+import { AutoComplete } from 'primereact/components/autocomplete/AutoComplete';
 
 export class AutoCompleteSkillFilter extends Component {
 
@@ -9,16 +9,6 @@ export class AutoCompleteSkillFilter extends Component {
       skills: [],
       filteredSkill: null
     };
-    this.skillList = this.props.skillList.map(skillData => {
-      if(skillData.skill !== null) {
-        return {
-          id: skillData.skill.id,
-          name: skillData.skill.title
-        } 
-      } else {
-        return
-      }
-    })
   }
 
   clearFilter = () => {
@@ -27,13 +17,17 @@ export class AutoCompleteSkillFilter extends Component {
     })
   }
 
-
   filterSkillMultiple = (event) =>  {
     setTimeout(() => {
-
-      let results = this.skillList.filter((skill) => {
-        if(!skill) return;
-          return skill.name.toLowerCase().includes(event.query.toLowerCase());
+      let results = [];
+        this.props.skillList['data'].filter((skill) => {
+          if(!skill) return;
+          if(skill.title.toLowerCase().includes(event.query.toLowerCase())){
+            results.push({
+              id: skill.id,
+              name: skill.title
+            })
+          }
         });
         
       this.setState({ filteredSkill: results });

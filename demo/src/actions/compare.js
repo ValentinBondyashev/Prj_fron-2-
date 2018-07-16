@@ -14,6 +14,15 @@ export const getAllSkillsAction = () => dispatch => {
   });
 }
 
+export const getSkillList = () => dispatch => {
+  axios.get('http://localhost:3010/skills/list', {})
+  .then(function (response) {
+    dispatch({ type: 'SUCCES_GET_SKILL_LIST', payload: response['data'] });
+  })
+  .catch(function (error) {  
+  });
+}
+
 export const getSkillUserAction = (id) => dispatch => {
     axios.get(`http://localhost:3010/skills/${id}`)
     .then(function (response) {

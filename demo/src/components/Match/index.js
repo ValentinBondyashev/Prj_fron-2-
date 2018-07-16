@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { AutoCompleteSkillFilter } from './containers/AutoCompleteSkillFilter';
 import { AutoCompleteUser } from './containers/AutocopleteUser';
-import { getAllSkillsAction } from '../../actions/compare';
+import { getAllSkillsAction, getSkillList } from '../../actions/compare';
 
 import './compare.css';
 
@@ -17,17 +17,7 @@ class App extends React.Component{
     this.state = {
       chekedUser: null,
       filters: null,
-      response: null
     }
-  }
-
-  testSendRequest = () => {
-    this.setState({
-      response: {
-        chekedUser: this.state.chekedUser,
-        filters: this.state.filters
-      }
-    })
   }
 
   changeStateFilter = (filters) => {
@@ -43,17 +33,18 @@ class App extends React.Component{
   }
 
   componentWillMount() {
-    this.props.getUsersFunction();
+    this.props.getAllSkillsAction();
+    this.props.getSkillList();
   }
 
   render() {
-    const { skills, listUsers } = this.props
+    const { skillList, listUsers } = this.props
     
     return(
       <div className='compare-desk'>
         <AutoCompleteUser users={listUsers} changeStateUser={this.changeStateUser}/>
         <hr/>
-        <AutoCompleteSkillFilter skillList={skills} changeStateFilter={this.changeStateFilter}/>
+        <AutoCompleteSkillFilter skillList={skillList} changeStateFilter={this.changeStateFilter}/>
         <hr/>
         <div className='send-request'>
           <button onClick={this.testSendRequest}>
@@ -61,14 +52,14 @@ class App extends React.Component{
           </button>
         </div>
         {
-          this.state.response && this.state.response.chekedUser && this.state.response.filters ? 
+          this.state.chekedUser && this.state.filters ? 
             <div>
               <h3>Sending a request with information: </h3>
               <div>
-                User: {this.state.response.chekedUser.name}
+                User: {this.state.chekedUser.name}
               </div>
               <div>
-                Filters: {this.state.response.filters.map((filter, index) => {
+                Filters: {this.state.filters.map((filter, index) => {
                   return (
                     <div key={index}>
                       {filter.name}
@@ -86,15 +77,18 @@ class App extends React.Component{
 
 function mapStateToProps(state) {
   return{
-    skills: state.skill.skills,
-    listUsers: state.skill.listUsers
+    listUsers: state.skill.listUsers,
+    skillList: state.getSkillsList
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    getUsersFunction: function () {
+    getAllSkillsAction: function () {
       dispatch(getAllSkillsAction());
+    },
+    getSkillList: function () {
+      dispatch(getSkillList())
     }
   }
 }

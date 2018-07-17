@@ -1,25 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getAllSkillsAction, getSkillUserAction } from '../../actions/compare'; 
-import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+// import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import Bubble from '../Bubble/Bubble';
 import Dashboard from '../../containers/Dashboard/Dashboard';
-import UserTable from '../../containers/UsersTable/UserTable';
+import SkillList from '../../containers/SkillList/SkillList';
 
 
-class Compare extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { 
-    };
-    this.getSkill = this.getSkill.bind(this);
-  }
+class Skills extends Component {
 
   componentWillMount() {
     this.props.getAllSkillsFunction(); 
   }
 
-  getSkill(id) {
+  getSkill = (id) => {
     this.props.getSkillUserFunction(id);
   }
 
@@ -27,9 +21,17 @@ class Compare extends Component {
     const {listUsers, userSkill, userId} = this.props;
     return (
         <div className="general" >
-            <UserTable listUsers={listUsers}/>   
-            {userSkill ? <Dashboard userSkill={userSkill} />: null }
-            {userSkill ? <Bubble userSkill={userSkill} userId={userId} /> : null}  
+            <SkillList listUsers={listUsers}/>   
+            {
+                userSkill ? 
+                    <Dashboard userSkill={userSkill} /> :
+                     null 
+            }
+            {
+                userSkill ?
+                    <Bubble userSkill={userSkill} userId={userId} /> :
+                     null
+            }  
         </div>
     );
   }
@@ -42,6 +44,7 @@ function mapStateToProps(state) {
         userId: state.skill.userId
     };
 }
+
 function mapDispathToProps(dispatch) {
     return {
         getAllSkillsFunction: function () {
@@ -53,5 +56,5 @@ function mapDispathToProps(dispatch) {
     };
 }
 
-export default connect(mapStateToProps,mapDispathToProps)(Compare);
+export default connect(mapStateToProps,mapDispathToProps)(Skills);
 

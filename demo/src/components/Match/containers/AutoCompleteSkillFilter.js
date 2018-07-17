@@ -49,7 +49,7 @@ export class AutoCompleteSkillFilter extends Component {
           multiple={true} 
           onChange={(e) => {
             this.setState({skills: e.value});
-            this.props.changeStateFilter(e.value)
+            this.props.changeStateFilter(e.value);
           }} />
         </span>
         <button onClick={this.clearFilter}>Clear filters</button>

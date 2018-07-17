@@ -9,8 +9,8 @@ export default {
         }
       },
       {
-        name: 'Compare',
-        url: '/compare',
+        name: 'Skills',
+        url: '/skills',
         icon: 'fa fa-signal',
         badge: {
           variant: 'info',

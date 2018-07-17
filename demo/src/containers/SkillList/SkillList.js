@@ -15,20 +15,29 @@ import 'primereact/resources/themes/omega/theme.css';
 import 'font-awesome/css/font-awesome.css';
 
 
-class Dashboard extends Component {
+class SkillList extends Component {
     constructor() {
         super();
         this.state = {
             listUsers: ''
         };
     }
+    
     displaySelection(data) {
         if(!data || data.length === 0) {
-            return <div style={{textAlign: 'left'}}>No Selection</div>;
+            return (
+                <div style={{textAlign: 'left'}}>
+                    No Selection
+                </div>
+            );
         }
         else {
             this.props.getSkillUserFunction(data.id)
-            return <div style={{textAlign: 'left'}}>Selected User: {data.uid + ' - ' + data.email }</div>
+            return (
+                <div style={{textAlign: 'left'}}>
+                    Selected User: {data.uid + ' - ' + data.email }
+                </div>
+            )
         }
     }
     
@@ -36,20 +45,24 @@ class Dashboard extends Component {
         return (
             <div>
                 <div className="content-section implementation">
-                    <DataTable value={this.props.listUsers} selectionMode="single" header="All Users" 
+                    <DataTable 
+                        value={this.props.listUsers} 
+                        selectionMode="single" 
+                        header="All Users" 
                         footer={this.displaySelection(this.state.listUsers)}
-                        selection={this.state.listUsers} onSelectionChange={(e) => this.setState({listUsers: e.data})}>
+                        selection={this.state.listUsers} 
+                        onSelectionChange={(e) => this.setState({listUsers: e.data})}>
+
                         <Column field="email"  header="email"/>
                         <Column field="name"  header="name"/>
                         <Column field="id"  header="id"/>
                         <Column field="created_at"  header="Data registration"/>
                     </DataTable>
                 </div>
-          
             </div>
         );
     }
-    }
+}
     
    
 function mapStateToProps(state) {
@@ -69,4 +82,4 @@ function mapDispathToProps(dispatch) {
     };
 }
 
-export default connect(mapStateToProps,mapDispathToProps)(Dashboard);
+export default connect(mapStateToProps,mapDispathToProps)(SkillList);

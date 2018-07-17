@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 class Roadmaps extends Component {
   constructor(props) {
-
     super(props);
     this.state = { 
     };
@@ -19,5 +18,5 @@ class Roadmaps extends Component {
 }
 
 
-export default Roodmaps;
+export default Roadmaps;
 

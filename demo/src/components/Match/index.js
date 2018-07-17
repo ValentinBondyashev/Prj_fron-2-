@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { AutoCompleteSkillFilter } from './containers/AutoCompleteSkillFilter';
 import { AutoCompleteUser } from './containers/AutocopleteUser';
 import { getAllSkillsAction, getSkillList } from '../../actions/compare';
+import { getMatchedUsers } from '../../actions/getMatchedUsers';
 
 import './compare.css';
 
@@ -12,18 +13,24 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 
 class App extends React.Component{
-  constructor(props){
-    super(props)
-    this.state = {
-      chekedUser: null,
-      filters: null,
-    }
-  }
+  // constructor(props){
+  //   super(props)
+  //   this.state = {
+  //     chekedUser: null,
+  //     filters: null,
+  //   }
+  // }
 
   changeStateFilter = (filters) => {
-    this.setState({
-      filters: filters
-    })
+    // this.setState({
+    //   filters: filters
+    // })
+
+    const filterId = filters.map(item => {
+      return item.id
+    });
+
+    this.props.getMatchedUsers(filterId);
   }
 
   changeStateUser = (user) => {
@@ -46,12 +53,7 @@ class App extends React.Component{
         <hr/>
         <AutoCompleteSkillFilter skillList={skillList} changeStateFilter={this.changeStateFilter}/>
         <hr/>
-        <div className='send-request'>
-          <button onClick={this.testSendRequest}>
-            Найти пару
-          </button>
-        </div>
-        {
+        {/* {
           this.state.chekedUser && this.state.filters ? 
             <div>
               <h3>Sending a request with information: </h3>
@@ -69,7 +71,7 @@ class App extends React.Component{
               </div>
             </div> :
             null
-        }
+        } */}
       </div>
     )
   }
@@ -78,7 +80,8 @@ class App extends React.Component{
 function mapStateToProps(state) {
   return{
     listUsers: state.skill.listUsers,
-    skillList: state.getSkillsList
+    skillList: state.getSkillsList,
+    matchedUsers: state.getMatchedUsers
   }
 }
 
@@ -89,6 +92,9 @@ function mapDispatchToProps(dispatch) {
     },
     getSkillList: function () {
       dispatch(getSkillList())
+    },
+    getMatchedUsers: function (filterId) {
+      dispatch(getMatchedUsers(filterId))
     }
   }
 }

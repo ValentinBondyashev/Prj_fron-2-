@@ -6,14 +6,16 @@ export class AutoCompleteSkillFilter extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      skills: [],
+      skills: null,
       filteredSkill: null
     };
   }
 
   clearFilter = () => {
+    this.props.changeStateFilter([]); 
     this.setState({
-      skills: null
+      skills: null,
+      filteredSkill: null
     })
   }
 
@@ -48,6 +50,7 @@ export class AutoCompleteSkillFilter extends Component {
           field="name" 
           multiple={true} 
           onChange={(e) => {
+            if(!e.value){this.clearFilter()}
             this.setState({skills: e.value});
             this.props.changeStateFilter(e.value);
           }} />

@@ -2,76 +2,60 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { AutoCompleteSkillFilter } from './containers/AutoCompleteSkillFilter';
-import { AutoCompleteUser } from './containers/AutocopleteUser';
+import AutoCompleteUser from './containers/AutocopleteUser';
+import { MatchedUsers } from './containers/MatchedUsers/MatchedUsers';
 import { getAllSkillsAction, getSkillList } from '../../actions/compare';
 import { getMatchedUsers } from '../../actions/getMatchedUsers';
 
-import './compare.css';
+import './Match.css';
 
 import 'primereact/resources/themes/omega/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
+import SelectedUser from './containers/SelectedUser/SelectedUser';
 
 class App extends React.Component{
-  // constructor(props){
-  //   super(props)
-  //   this.state = {
-  //     chekedUser: null,
-  //     filters: null,
-  //   }
-  // }
+  constructor(props){
+    super(props);
+    this.state = {
+      filters: null,
+      selectedUser: null
+    }
+  }
+
+  selectUser = (user) => {
+    this.setState({
+      selectedUser: user
+    })
+  }
 
   changeStateFilter = (filters) => {
-    // this.setState({
-    //   filters: filters
-    // })
-
     const filterId = filters.map(item => {
       return item.id
+    });
+    this.setState({
+      filters: filterId.length !== 0 ? filterId : null
     });
 
     this.props.getMatchedUsers(filterId);
   }
-
-  changeStateUser = (user) => {
-    this.setState({
-      chekedUser: user
-    })
-  }
-
+  
   componentWillMount() {
     this.props.getAllSkillsAction();
     this.props.getSkillList();
   }
 
   render() {
-    const { skillList, listUsers } = this.props
-    
+    const { skillList, listUsers, matchedUsers } = this.props;
+    const { filters, selectedUser } = this.state;
+
     return(
       <div className='compare-desk'>
-        <AutoCompleteUser users={listUsers} changeStateUser={this.changeStateUser}/>
+        <AutoCompleteUser users={listUsers} filters={filters} selectUser={(user) => {this.selectUser(user)}}/>
         <hr/>
         <AutoCompleteSkillFilter skillList={skillList} changeStateFilter={this.changeStateFilter}/>
         <hr/>
-        {/* {
-          this.state.chekedUser && this.state.filters ? 
-            <div>
-              <h3>Sending a request with information: </h3>
-              <div>
-                User: {this.state.chekedUser.name}
-              </div>
-              <div>
-                Filters: {this.state.filters.map((filter, index) => {
-                  return (
-                    <div key={index}>
-                      {filter.name}
-                    </div>
-                    )
-                })}
-              </div>
-            </div> :
-            null
-        } */}
+        <MatchedUsers matchedUsers={matchedUsers} selectedUser={selectedUser}/>
       </div>
     )
   }

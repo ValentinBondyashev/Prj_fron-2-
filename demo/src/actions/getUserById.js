@@ -17,14 +17,14 @@ axios.interceptors.response.use(
     }
   } 
 );
-export const getMatchedUsers = (filterId) => dispatch => {
-  let request = [];
-  JSON.stringify(filterId.map((item, idx) => {
-    request.push(`skills[${idx}]=${item}`)
-  }));
-  axios.get(`http://localhost:3010/skills/matched?${request.join('&')}`, {})
+export const getUserById = (userId) => dispatch => {
+  if(userId === null){
+    dispatch({ type: 'SUCCES_GET_USER_BY_ID', payload: null})
+  }
+  
+  axios.get(`http://localhost:3010/user/${userId}`, {})
   .then(function (response) {
-    dispatch({ type: 'SUCCES_GET_MATCHED_USERS', payload: response.data });
+    dispatch({ type: 'SUCCES_GET_USER_BY_ID', payload: response.data.data });
   })
   .catch(function (error) {  
   });

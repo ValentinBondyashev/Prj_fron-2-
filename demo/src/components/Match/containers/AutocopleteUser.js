@@ -1,43 +1,50 @@
 import React, {Component} from 'react';
 import { AutoComplete } from 'primereact/components/autocomplete/AutoComplete';
+import { connect } from 'react-redux';
+import { getUserById } from '../../../actions/getUserById';
+import SelectedUser from './SelectedUser/SelectedUser';
 
-
-export class AutoCompleteUser extends Component {
+class AutoCompleteUser extends Component {
 
   constructor(props) {
       super(props);   
       this.state = {
-        user: [],
-        filteredUser: null
+        user: null,
+        filteredUsers: null
       };
   }
 
-  componentDidMount() {
-    this.users = this.props.users
-  }
-
-  componentDidUpdate() {
-    this.users = this.props.users
+  clearUser = () => {
+    this.setState({
+      user: null
+    });
+    this.props.getUserById(null);
   }
 
   filterUsers = (event) => {
     setTimeout(() => {
-        var result = this.users.filter((user) => {
-          if(user.name.toLowerCase().includes(event.query.toLowerCase())){
-            return user
+        var result = this.props.users.filter((item) => {
+          if(item.name.toLowerCase().includes(event.query.toLowerCase())){
+            return item
           }
         });
-        this.setState({ filteredUser: result });
+        this.setState({ filteredUsers: result });
     }, 250);
   }
 
   render() {
+    
+    const { userById, filters } = this.props;
+    const { user, filteredUsers } = this.state;
+    let skills =[];
+
     return (
       <div className='autocomplete-user'>
         <h3>Developer</h3>
         <AutoComplete 
-          value={this.state.user} 
-          suggestions={this.state.filteredUser} 
+          value={userById ? userById.name : null}
+          defaultValue={user}
+          suggestions={filteredUsers} 
           completeMethod={this.filterUsers} 
           field="name"
           size={30} 
@@ -45,10 +52,38 @@ export class AutoCompleteUser extends Component {
           minLength={1} 
           onChange={(e) => {
             this.setState({user: e.value});
-            this.props.changeStateUser(e.value);
-          }} />
+            this.props.selectUser(e.value);
+            if(e.value.id){
+              this.props.getUserById(e.value.id)
+            }
+          }}/>
           <br/>
+          
+          {
+            (userById && user && userById.id === user.id) ? 
+              <SelectedUser userById={userById} filters={filters} skills={skills}/>
+              : null
+          }
+          <button onClick={this.clearUser}>
+              <span>Clear User</span>
+          </button>
       </div>
     )
   }
 }
+
+function mapStateToProps(state){
+  return {
+    userById: state.getUserById
+  }
+};
+
+function mapDispatchToProps(dispatch){
+  return {
+    getUserById: function (userId) {
+      dispatch(getUserById(userId));
+    }
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AutoCompleteUser)

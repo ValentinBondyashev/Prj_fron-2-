@@ -1,0 +1,12 @@
+.matched-users{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.matched-user{
+  padding: 3px;
+  margin: 5px;
+  border: 1px solid black;
+  border-radius: 5px;
+  background: #838689
+}

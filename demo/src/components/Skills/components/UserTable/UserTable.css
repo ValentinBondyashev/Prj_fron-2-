@@ -1,0 +1,29 @@
+.user-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table-row-header {
+  background: #BBB;
+  border: 1px solid #CCC;
+  text-align: left;
+  padding: 8px;
+}
+
+.table-row {
+  border: 1px solid #CCC;
+  text-align: left;
+  padding: 8px;
+}
+
+.table-cell{
+  background: #0FA;
+}
+
+.name{
+  background: #C0A;
+}
+
+.technology {
+  text-align: center;
+}

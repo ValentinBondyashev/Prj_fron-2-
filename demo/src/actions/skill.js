@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { setInterval } from 'timers';
 
 axios.interceptors.request.use((config)=>{  
   const token = localStorage.token;

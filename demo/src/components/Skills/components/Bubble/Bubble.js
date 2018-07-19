@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { Component, PureComponent } from 'react'
 import { ResponsiveBubble } from '@nivo/circle-packing'
 import { connect } from 'react-redux'
-import { getSkillsAction } from '../../actions/skill'
+import { getSkillsAction } from '../../../../actions/skill'
 import { linearGradientDef } from '@nivo/core'
 
 const fData = {

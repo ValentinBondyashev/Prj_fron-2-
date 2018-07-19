@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Dropdown } from 'primereact/components/dropdown/Dropdown';
 
 
-import { getSkillUserAction } from '../../actions/compare';
+import { getUserById } from '../../../../actions/getUserById';
 import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/omega/theme.css';
 import 'font-awesome/css/font-awesome.css';
@@ -19,7 +19,7 @@ class SkillList extends Component {
     
   onUserChange = (e) => {
     this.setState({user: e.value});
-    this.props.getSkillUserFunction(e.value.id)
+    this.props.getUserById(e.value.id)
   }
     
   render() {
@@ -39,14 +39,14 @@ class SkillList extends Component {
 
 function mapStateToProps(state) {
   return { 
-    skills: state.skill.skills.data,
+    userById: state.getUserById
   };
 };
 
 function mapDispathToProps(dispatch) {
   return {
-    getSkillUserFunction: function (id) {
-      dispatch(getSkillUserAction(id));
+    getUserById: function (id) {
+      dispatch(getUserById(id));
     }
   };
 }

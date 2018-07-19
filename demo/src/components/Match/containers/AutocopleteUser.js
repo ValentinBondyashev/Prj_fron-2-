@@ -38,7 +38,7 @@ class AutoCompleteUser extends Component {
           suggestions={filteredUsers} 
           completeMethod={this.filterUsers} 
           field="name"
-          size={30} 
+          size={50} 
           placeholder="Developers" 
           minLength={1} 
           onChange={

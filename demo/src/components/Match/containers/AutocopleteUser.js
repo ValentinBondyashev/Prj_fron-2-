@@ -14,13 +14,6 @@ class AutoCompleteUser extends Component {
       };
   }
 
-  clearUser = () => {
-    this.setState({
-      user: null
-    });
-    this.props.getUserById(null);
-  }
-
   filterUsers = (event) => {
     setTimeout(() => {
         var result = this.props.users.filter((item) => {
@@ -37,36 +30,32 @@ class AutoCompleteUser extends Component {
     const { userById, filters } = this.props;
     const { user, filteredUsers } = this.state;
     let skills =[];
-
     return (
       <div className='autocomplete-user'>
         <h3>Developer</h3>
         <AutoComplete 
-          value={userById ? userById.name : null}
-          defaultValue={user}
+          value={user}
           suggestions={filteredUsers} 
           completeMethod={this.filterUsers} 
           field="name"
           size={30} 
           placeholder="Developers" 
           minLength={1} 
-          onChange={(e) => {
-            this.setState({user: e.value});
-            this.props.selectUser(e.value);
-            if(e.value.id){
-              this.props.getUserById(e.value.id)
+          onChange={
+            (e) => {
+              this.setState({user: e.value });
+              this.props.selectUser(e.value);
+              if(e.value.id){
+                this.props.getUserById(e.value.id)
+              }
             }
-          }}/>
+          }/>
           <br/>
-          
           {
             (userById && user && userById.id === user.id) ? 
               <SelectedUser userById={userById} filters={filters} skills={skills}/>
               : null
           }
-          <button onClick={this.clearUser}>
-              <span>Clear User</span>
-          </button>
       </div>
     )
   }

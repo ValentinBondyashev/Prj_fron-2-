@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {DataTable} from 'primereact/components/datatable/DataTable';
@@ -7,13 +6,11 @@ import {Button} from 'primereact/components/button/Button';
 import {Column} from 'primereact/components/column/Column';
 import {InputText} from 'primereact/components/inputtext/InputText';
 import {InputTextarea} from 'primereact/components/inputtextarea/InputTextarea';
-// import {Dropdown} from 'primereact/components/dropdown/Dropdown';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
 import { getSkillsAction, createSkillsAction, getIdCategoriesAction, createSkillsAdminAction } from '../../actions/skill'; 
 import { editSkillsAction } from '../../actions/compare'; 
-import Bubble from '../Bubble/Bubble';
 
 import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/omega/theme.css';
